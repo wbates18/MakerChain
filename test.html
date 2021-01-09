@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+        <title>ph Square</title>
+        <style>
+            .square {
+                position: relative;
+                background: lightblue;
+                width: 300px;
+                height: 300px;
+            }
+            .corner {
+                position: absolute;
+            }
+            .corner.topleft {
+                top: 5px;
+                left: 5px;
+            }
+            .corner.topright {
+                top: 5px;
+                right: 5px;
+            }
+            .corner.bottomleft {
+                bottom: 5px;
+                left: 5px;
+            }
+            .corner.bottomright {
+                bottom: 5px;
+                right: 5px;
+            }
+            .corner input {
+                display: inline-block;
+            }
+            .log {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                background: lightpink;
+            }
+            .log.tape {
+                border-bottom: solid;
+            }
+        </style>
+        <script async defer src="https://buttons.github.io/buttons.js"></script>
+    </head>
+    <body>
+        <h3>Fill only one box</h3>
+        <a class="github-button" href="https://github.com/au5ton/pHsquare" aria-label="Star au5ton/pHsquare on GitHub">Star</a>
+        <div class="square">
+            <div class="corner topleft">
+                    <p>[H+]</p>
+                    <input id="Hconc" type="text">
+            </div>
+            <div class="corner topright">
+                    <p>[OH-]</p>
+                    <input id="OHconc" type="text">
+            </div>
+            <div class="corner bottomleft">
+                    <p>pH</p>
+                    <input id="pH" type="text">
+            </div>
+            <div class="corner bottomright">
+                    <p>pOH</p>
+                    <input id="pOH" type="text">
+            </div>
+        </div>
+        <button id="calculate">Calculate others</button>
+        <button id="reset">Empty fields</button>
+        <script>
+            var button = document.getElementById('calculate');
+            var reset = document.getElementById('reset');
+            var H = document.getElementById('Hconc');
+            var OH = document.getElementById('OHconc');
+            var pH = document.getElementById('pH');
+            var pOH = document.getElementById('pOH');
+            var fields = ['H', 'OH', 'pH', 'pOH'];
+
+            button.addEventListener('click', (elem, event) => {
+                let result = fieldsValidated();
+
+                //if our fields are valid
+                if(result.valid) {
+                    //for every field..
+                    for(let i in fields) {
+                        //..that isn't the supplied value..
+                        if(fields[i] !== result.filledField) {
+                            //..calculate and fill it
+                            window[fields[i]].value = calculateField(result.filledField, fields[i]);
+                        }
+                    }
+                }
+            });
+
+            reset.addEventListener('click', () => {
+                for(let i in fields) {
+                    window[fields[i]].value = '';
+                }
+            });
+
+            function fieldsValidated() {
+                // verify only one field is filled
+                let populated = 0;
+                let filledField = null;
+                if(H.value !== '') {
+                    populated++;
+                    filledField = 'H';
+                }
+                if(OH.value !== '') {
+                    populated++;
+                    filledField = 'OH';
+                }
+                if(pH.value !== '') {
+                    populated++;
+                    filledField = 'pH';
+                }
+                if(pOH.value !== '') {
+                    populated++;
+                    filledField = 'pOH';
+                }
+                if(populated !== 1)
+                    return {valid: false};
+
+                // console.log('pop ',populated);
+                // console.log('ff ',filledField);
+                // console.log('val ',window[filledField].value)
+
+                //verify filled field has a number
+                if(isNaN(window[filledField].value)) {
+                    return {valid: false};
+                }
+                else {
+                    return {valid: true, filledField: filledField};
+                }
+            }
+
+            function calculateField(from, to) {
+                let decimals = 8;
+                //Starting with H or OH
+
+                if((from === 'H' && to === 'OH') || (from === 'OH' && to === 'H')) {
+                    return (Math.pow(10,-14)/num(from)).toExponential(decimals);
+                }
+
+                if((from === 'OH' && to === 'pOH') || (from === 'H' && to === 'pH')) {
+                    return -Math.log10(num(from));
+                }
+
+                if((from === 'OH' && to === 'pH') || (from === 'H' && to === 'pOH')) {
+                    return -Math.log10(  Math.pow(10,-14)/num(from)  );
+                }
+
+                //Starting with pH or pOH
+
+                if((from === 'pH' && to === 'pOH') || (from === 'pOH' && to === 'pH')) {
+                    return 14 - num(from);
+                }
+
+                if((from === 'pH' && to === 'H') || (from === 'pOH' && to === 'OH')) {
+                    return (Math.pow(10,-num(from))).toExponential(decimals);
+                }
+
+                if( (from === 'pH' && to === 'OH') || (from === 'pOH' && to === 'H')) {
+                    return (Math.pow(10,-(  14 - num(from)  ))).toExponential(decimals);
+                }
+
+                return 'case not specified';
+            }
+
+            function num(field) {
+                return parseFloat(window[field].value);
+            }
+
+        </script>
+    </body>
+</html>
