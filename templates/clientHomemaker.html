@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MakerChain</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-info navbar-dark sticky-top">
+  {% if session.get('loggedin') == True %}
+    {% if session.get('maker') == True %}
+        <a class="navbar-brand" href="clientHomemaker.html">
+              <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+        </a>
+    {% else %}
+      <a class="navbar-brand" href="clientHome.html">
+          <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+      </a>
+    {% endif %}
+  {% else %}
+    <a class="navbar-brand" href="index.html">
+          <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+    </a>
+  {% endif %}
+  <button class="navbar-toggler justify-content-start" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        {{ variable }}
+          <img src="{{ pfp }}" style="width: 25px; border-radius:50%; height: 25px">
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="profilemaker.html">Profile</a>
+        <a class="dropdown-item" href="#">Settings</a>
+          <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="logout.html">Log Out</a>
+      </div>
+    </li>
+    </ul>
+  </div>
+</nav>
+{% if variable5 == True %}
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        Upgraded To Maker!
+    </div>
+{% elif variable4 == True %}
+    <div class="alert alert-success alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Logged In!</strong> Welcome Back {{ variable }}!
+    </div>
+{% endif %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar">
+            <ul class="nav flex-column flex-nowrap overflow-hidden">
+                <li class="nav-item">
+                    <a class="nav-link text-truncate" href="#"><i class="fa fa-home"></i> <span class="d-none d-sm-inline">Overview</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed text-truncate" href="#submenu1" data-toggle="collapse" data-target="#submenu1"><i class="fa fa-table"></i> <span class="d-none d-sm-inline">Reports</span></a>
+                    <div class="collapse" id="submenu1" aria-expanded="false">
+                        <ul class="flex-column pl-2 nav">
+                            <li class="nav-item"><a class="nav-link py-0" href="#"><span>Orders</span></a></li>
+                            <li class="nav-item">
+                                <a class="nav-link collapsed py-1" href="#submenu1sub1" data-toggle="collapse" data-target="#submenu1sub1"><span>Customers</span></a>
+                                <div class="collapse" id="submenu1sub1" aria-expanded="false">
+                                    <ul class="flex-column nav pl-4">
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-clock-o"></i> Daily </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-dashboard"></i> Dashboard </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-bar-chart"></i> Charts </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link p-1" href="#">
+                                                <i class="fa fa-fw fa-compass"></i> Areas </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>=
+                </li>
+                <li class="nav-item"><a class="nav-link text-truncate" href="#"><i class="fa fa-bar-chart"></i> <span class="d-none d-sm-inline">Analytics</span></a></li>
+                <li class="nav-item"><a class="nav-link text-truncate" href="#"><i class="fa fa-download"></i> <span class="d-none d-sm-inline">Export</span></a></li>
+            </ul>
+        </div>
+
+
+</body>
+</html>

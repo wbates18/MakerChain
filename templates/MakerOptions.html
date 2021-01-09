@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MakerChain</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function(){
+        let x = 0;
+        $("#text1").hide();
+        $("#text2").hide();
+        $("#text3").hide();
+        document.getElementById("button1").onclick = function () {Button1()};
+
+        function Button1() {
+          if (x === 0) {
+              document.getElementById("text1").style.display = 'block';
+              x = 1;
+              return;
+            }
+          if (x === 1) {
+              document.getElementById("text2").style.display = 'block';
+              x = 2;
+              return;
+          }
+          if (x === 2) {
+              document.getElementById("text3").style.display = 'block';
+              $("#button1").hide();
+          }
+        }
+    });
+  </script>
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+  </style>
+</head>
+<body>
+<!-- Nav Bar -->
+
+<nav class="navbar navbar-expand-lg bg-info navbar-dark sticky-top">
+  {% if session.get('loggedin') == True %}
+    {% if session.get('maker') == True %}
+        <a class="navbar-brand" href="clientHomemaker.html">
+              <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+        </a>
+    {% else %}
+      <a class="navbar-brand" href="clientHome.html">
+          <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+      </a>
+    {% endif %}
+  {% else %}
+    <a class="navbar-brand" href="index.html">
+          <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+    </a>
+  {% endif %}
+  <button class="navbar-toggler justify-content-start" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        {{ variable }}
+          <img src="{{ pfp }}" style="width: 25px; border-radius:50%; height: 25px">
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="profile.html">Profile</a>
+        <a class="dropdown-item" href="#">Settings</a>
+          <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="logout.html">Log Out</a>
+      </div>
+    </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Chnage Maker Settings -->
+<br>
+<br>
+<div class="container pt-5"> <!-- Login Window -->
+<div class="row justify-content-center">
+<div class="col-md-9">
+<div class="card shadow-lg">
+<header class="card-header">
+	<h4 class="card-title mt-2">Change Maker Settings</h4>
+</header>
+<article class="card-body">
+<form action="{{ url_for('MOptions') }}" method="post">
+
+
+    <!-- Printer Select -->
+    <div class="form-row">
+		<div class="col-md-12" style="margin-bottom: 0">
+            <br>
+			<label>Printer </label>
+            <label for="inputPrinter"></label><input placeholder="{{ p1 }}" type="text" id="inputPrinter" class="form-control" name="Printer">
+    <div class="col-md-13 form-group" style="margin-bottom: 0">
+        <br>
+        <label>Printer Bed Size </label>
+        {% if s1 == "XS" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size">
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s1 == "SM" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size">
+              <option value="SM">Small - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s1 == "ME" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size">
+              <option value="ME">Medium - </option>
+              <option value="SM">Small - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s1 == "LA" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size">
+              <option value="LA">Large - </option>
+              <option value="SM">Small - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s1 == "XL" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size">
+              <option value="XL">Extra Large - </option>
+              <option value="SM">Small - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+            </select>
+        {% endif %}
+    </div> <!-- form-group end.// -->
+		</div> <!-- form-group end.// -->
+
+        <div id="text1" class="col-md-12" style="margin-bottom: 0">
+                <br>
+                <label>Printer </label>
+                <label for="inputPrinter"></label><input placeholder="{{ p2 }}" type="text" id="inputPrinter2" class="form-control" name="Printer3">
+            <div class="col-md-13 form-group" style="margin-bottom: 0">
+                <br>
+                <label>Printer Bed Size </label>
+        {% if s2 == "XS" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size2">
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s2 == "SM" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size2">
+              <option value="SM">Small - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s2 == "ME" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size2">
+              <option value="ME">Medium - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s2 == "LA" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size2">
+              <option value="LA">Large - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s2 == "XL" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size2">
+              <option value="XL">Extra Large - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+            </select>
+        {% else %}
+             <label for="inputBed"></label><select id="inputBed" class="form-control" name="size2">
+              <option></option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% endif %}
+		</div> <!-- form-group end.// -->
+        </div>
+
+        <div id="text2" class="col-md-12" style="margin-bottom: 0">
+                <br>
+                <label>Printer </label>
+                <label for="inputPrinter"></label><input placeholder="{{ p3 }}" type="text" id="inputPrinter2" class="form-control" name="Printer3">
+            <div class="col-md-13 form-group" style="margin-bottom: 0">
+                <br>
+                <label>Printer Bed Size </label>
+        {% if s3 == "XS" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s3 == "SM" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option value="SM">Small - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s3 == "ME" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option value="ME">Medium - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s3 == "LA" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option value="LA">Large - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s3 == "XL" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option value="XL">Extra Large - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+            </select>
+        {% else %}
+             <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option></option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% endif %}
+		</div> <!-- form-group end.// -->
+        </div> <!-- form-group end.// -->
+
+        <div id="text3" class="col-md-12" style="margin-bottom: 0">
+                <br>
+                <label>Printer </label>
+                <label for="inputPrinter"></label><input placeholder="{{ p4 }}" type="text" id="inputPrinter3" class="form-control" name="Printer4">
+            <div class="col-md-13 form-group" style="margin-bottom: 0">
+                <br>
+                <label>Printer Bed Size </label>
+        {% if s4 == "XS" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s4 == "SM" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option value="SM">Small - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s4 == "ME" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option value="ME">Medium - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s4 == "LA" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option value="LA">Large - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% elif s4 == "XL" %}
+            <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option value="XL">Extra Large - </option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+            </select>
+        {% else %}
+             <label for="inputBed"></label><select id="inputBed" class="form-control" name="size3">
+              <option></option>
+              <option value="XS">Extra Small - </option>
+              <option value="SM">Small - </option>
+              <option value="ME">Medium - </option>
+              <option value="LA">Large - </option>
+              <option value="XL">Extra Large - </option>
+            </select>
+        {% endif %}
+		</div> <!-- form-group end.// -->
+        </div> <!-- form-group end.// -->
+
+
+
+
+
+        <div class="container vertical-center form-group" style="margin-top: 25px;padding-right: 250px;padding-left: 250px">
+            <input class="btn btn-outline-info btn-block" type="button" value="Add Printer" id="button1" />
+        </div>
+
+
+   <!-- Material Select -->
+
+    <div class="col-md-6 form-group" style="margin: 0">
+		    <label>Materials</label>
+        <br>
+            {% if m1 == True %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="abs" name="mat" checked>ABS
+                    </label>
+                </div>
+            {% else %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="abs" name="mat">ABS
+                    </label>
+                </div>
+            {% endif %}
+            {% if m2 == True %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                         <input type="checkbox" class="form-check-input" value="pla" name="mat" checked>PLA
+                    </label>
+                </div>
+            {% else %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                         <input type="checkbox" class="form-check-input" value="pla" name="mat">PLA
+                    </label>
+                </div>
+            {% endif %}
+            {% if m3 == True %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="nylon" name="mat" checked>NYLON
+                    </label>
+                </div>
+            {% else %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="nylon" name="mat">NYLON
+                    </label>
+                </div>
+            {% endif %}
+            {% if m4 == True %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="resin" name="mat" checked>RESIN
+                    </label>
+                </div>
+            {% else %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="resin" name="mat">RESIN
+                    </label>
+                </div>
+            {% endif %}
+            {% if m5 == True %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="petg" name="mat" checked>PET(G)
+                    </label>
+                </div>
+            {% else %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" value="petg" name="mat">PET(G)
+                    </label>
+                </div>
+            {% endif %}
+	</div>
+
+  <!-- Colour Selection -->
+
+	<div class="col-md-6 form-group" style="margin: 0">
+		    <label>Colours</label>
+        <br>
+                {%  if c1 == True %}
+                    <div class="form-check-inline" style="margin: 0">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="colour" value="black" checked>Black
+                        </label>
+                    </div>
+                {% else %}
+                     <div class="form-check-inline" style="margin: 0">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="colour" value="black">Black
+                        </label>
+                    </div>
+                {% endif %}
+                {% if c2 == True %}
+                    <div class="form-check-inline" style="margin: 0">
+                        <label class="form-check-label">
+                             <input type="checkbox" class="form-check-input" name="colour" value="white" checked>White
+                        </label>
+                    </div>
+                {% else %}
+                    <div class="form-check-inline" style="margin: 0">
+                        <label class="form-check-label">
+                             <input type="checkbox" class="form-check-input" name="colour" value="white">White
+                        </label>
+                    </div>
+                {% endif %}
+                {% if c3 == True %}
+                <div class="form-check-inline" style="margin: 0">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="colour" value="gold" checked>Gold
+                    </label>
+                </div>
+                {% else %}
+                    <div class="form-check-inline" style="margin: 0">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="colour" value="gold" checked>Gold
+                        </label>
+                    </div>
+                {% endif %}
+                {% if c4 == True %}
+                    <div class="form-check-inline" style="margin: 0">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="colour" value="red" checked>Red
+                        </label>
+                    </div>
+                {% else %}
+                    <div class="form-check-inline" style="margin: 0">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="colour" value="red">Red
+                        </label>
+                    </div>
+                {% endif %}
+                {% if c5 == True %}
+                    <div class="form-check-inline" style="margin: 0">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="colour" value="green" checked>Green
+                        </label>
+                    </div>
+                {% else %}
+                    <div class="form-check-inline" style="margin: 0">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="colour" value="green">Green
+                        </label>
+                    </div>
+                {% endif %}
+                {% if c6 == True %}
+                    <div class="form-check-inline">
+                        <label class="form-check-label" style="margin: 0">
+                            <input type="checkbox" class="form-check-input" name="colour" value="blue" checked>Blue
+                        </label>
+                    </div>
+                {% else %}
+                    <div class="form-check-inline">
+                        <label class="form-check-label" style="margin: 0">
+                            <input type="checkbox" class="form-check-input" name="colour" value="blue">Blue
+                        </label>
+                    </div>
+                {% endif %}
+	</div>
+
+        <div class="col-md-6 form-group" style="margin: 0">
+            <label for="inputPrinter"></label><input placeholder="{{ othermat }}" type="text" list="printers" id="inputOthermat" class="form-control" name="othermat">
+
+		</div>
+
+        <div class="col-md-6 form-group" style="margin: 0">
+            <label for="inputPrinter"></label><input placeholder="{{ othercolour }}" type="text" list="printers" id="inputOthercolour" class="form-control" name="othercolour">
+
+		</div>
+
+        <!-- Range -->
+    {% if r1 == "2km" %}
+        <div class="col-md-6 form-group">
+            <br>
+                <label>Range of Delivery </label>
+                <label for="inputBed"></label><select id="inputBed" class="form-control" name="range">
+                  <option>2km</option>
+                  <option>No Delivery</option>
+                  <option>5km</option>
+                  <option>10km</option>
+                  <option>20km</option>
+                  <option>50km</option>
+                </select>
+        </div>
+    {% elif r1 == "5km" %}
+        <div class="col-md-6 form-group">
+            <br>
+                <label>Range of Delivery </label>
+                <label for="inputBed"></label><select id="inputBed" class="form-control" name="range">
+                  <option>5km</option>
+                  <option>No Delivery</option>
+                  <option>2km</option>
+                  <option>10km</option>
+                  <option>20km</option>
+                  <option>50km</option>
+                </select>
+        </div>
+    {% elif r1 == "10km" %}
+         <div class="col-md-6 form-group">
+            <br>
+                <label>Range of Delivery </label>
+                <label for="inputBed"></label><select id="inputBed" class="form-control" name="range">
+                  <option>10km</option>
+                  <option>No Delivery</option>
+                  <option>2km</option>
+                  <option>5km</option>
+                  <option>20km</option>
+                  <option>50km</option>
+                </select>
+        </div>
+    {% elif r1 == "20km" %}
+        <div class="col-md-6 form-group">
+            <br>
+                <label>Range of Delivery </label>
+                <label for="inputBed"></label><select id="inputBed" class="form-control" name="range">
+                  <option>20km</option>
+                  <option>No Delivery</option>
+                  <option>2km</option>
+                  <option>5km</option>
+                  <option>10km</option>
+                  <option>50km</option>
+                </select>
+        </div>
+    {% elif r1 == "50km" %}
+        <div class="col-md-6 form-group">
+            <br>
+                <label>Range of Delivery </label>
+                <label for="inputBed"></label><select id="inputBed" class="form-control" name="range">
+                  <option>50km</option>
+                  <option>No Delivery</option>
+                  <option>2km</option>
+                  <option>5km</option>
+                  <option>10km</option>
+                  <option>20km</option>
+                </select>
+        </div>
+    {% else %}
+        <div class="col-md-6 form-group">
+            <br>
+                <label>Range of Delivery </label>
+                <label for="inputBed"></label><select id="inputBed" class="form-control" name="range">
+                  <option>No Delivery</option>
+                  <option>2km</option>
+                  <option>5km</option>
+                  <option>10km</option>
+                  <option>20km</option>
+                  <option>50km</option>
+                </select>
+        </div>
+    {% endif %}
+
+        <!-- Spacing -->
+
+        <div class="col-md-6 form-group">
+
+        </div>
+        <div class="col-md-3 form-group">
+
+        </div>
+
+        <div class="col-md-6 form-group">
+            <br>
+        <button type="submit" class="btn btn-info btn-block" name="submit2"> Change Settings  </button>
+    </div>
+        <div class="col-md-3 form-group"></div>
+    </div>
+
+</form>
+</article> <!-- card-body end .// -->
+</div> <!-- card.// -->
+</div> <!-- col.//-->
+</div> <!-- row.//-->
+</div>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MakerChain</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+      $(document).ready(function () {
+          let x = 0;
+          let xmat = 0;
+          let xmat2 = 0;
+          let xmat3 = 0;
+          let xmat4 = 0;
+          let xmat5 = 0;
+          let xcol = 0;
+          let xcol2 = 0;
+          let xcol3 = 0;
+          let xcol4 = 0;
+          let xcol5 = 0;
+          let xin = 0;
+          let xq = 0;
+
+          $("#col2").hide();
+          $("#col3").hide();
+          $("#col4").hide();
+          $("#col5").hide();
+          $("#mat2").hide();
+          $("#mat3").hide();
+          $("#mat4").hide();
+          $("#mat5").hide();
+          $("#mcol2").hide();
+          $("#mcol3").hide();
+          $("#mcol4").hide();
+          $("#mcol5").hide();
+          $("#mmat2").hide();
+          $("#mmat3").hide();
+          $("#mmat4").hide();
+          $("#mmat5").hide();
+          $("#othermat1").hide();
+          $("#othercol1").hide();
+          document.getElementById("showcol5").style.display = "none";
+          document.getElementById("showcol5").style.display = "none";
+          document.getElementById("showcol5").style.display = "none";
+          document.getElementById("showcol5").style.display = "none";
+          document.getElementById("otherin1").style.display = "none";
+          document.getElementById("otherq1").style.display = "none";
+          document.getElementById("watershow").style.display = "none";
+          document.getElementById("multishow").style.display = "none";
+          document.getElementById("othermat").onclick = function () {showmat()};
+          document.getElementById("othercol").onclick = function () {showcol()};
+          document.getElementById("otherin").onclick = function () {showin()};
+          document.getElementById("otherq").onclick = function () {showq()};
+          document.getElementById("advanced").onclick = function () {showad()};
+          document.getElementById("m1").onclick = function () {showmulti(1)};
+          document.getElementById("m2").onclick = function () {showmulti(2)};
+          document.getElementById("m3").onclick = function () {showmulti(3)};
+          document.getElementById("m4").onclick = function () {showmulti(4)};
+          document.getElementById("m5").onclick = function () {showmulti(5)};
+          document.getElementById("showcol2").onclick = function () {showcol2()};
+          document.getElementById("showcol3").onclick = function () {showcol3()};
+          document.getElementById("showcol4").onclick = function () {showcol4()};
+          document.getElementById("showcol5").onclick = function () {showcol5()};
+          document.getElementById("showmat2").onclick = function () {showmat2()};
+          document.getElementById("showmat3").onclick = function () {showmat3()};
+          document.getElementById("showmat4").onclick = function () {showmat4()};
+          document.getElementById("showmat5").onclick = function () {showmat5()};
+          document.getElementById("PLA1").onclick = function () {hideotherm1()};
+          document.getElementById("ABS1").onclick = function () {hideotherm1()};
+          document.getElementById("NY1").onclick = function () {hideotherm1()};
+          document.getElementById("R1").onclick = function () {hideotherm1()};
+          document.getElementById("PET1").onclick = function () {hideotherm1()};
+          document.getElementById("PLA2").onclick = function () {hideotherm2()};
+          document.getElementById("ABS2").onclick = function () {hideotherm2()};
+          document.getElementById("NY2").onclick = function () {hideotherm2()};
+          document.getElementById("R2").onclick = function () {hideotherm2()};
+          document.getElementById("PET2").onclick = function () {hideotherm2()};
+          document.getElementById("PLA3").onclick = function () {hideotherm3()};
+          document.getElementById("ABS3").onclick = function () {hideotherm3()};
+          document.getElementById("NY3").onclick = function () {hideotherm3()};
+          document.getElementById("R3").onclick = function () {hideotherm3()};
+          document.getElementById("PET3").onclick = function () {hideotherm3()};
+          document.getElementById("PLA4").onclick = function () {hideotherm4()};
+          document.getElementById("ABS4").onclick = function () {hideotherm4()};
+          document.getElementById("NY4").onclick = function () {hideotherm4()};
+          document.getElementById("R4").onclick = function () {hideotherm4()};
+          document.getElementById("PET4").onclick = function () {hideotherm4()};
+          document.getElementById("PLA5").onclick = function () {hideotherm5()};
+          document.getElementById("ABS5").onclick = function () {hideotherm5()};
+          document.getElementById("NY5").onclick = function () {hideotherm5()};
+          document.getElementById("R5").onclick = function () {hideotherm5()};
+          document.getElementById("PET5").onclick = function () {hideotherm5()};
+          document.getElementById("bk1").onclick = function () {hideotherc1()};
+          document.getElementById("b1").onclick = function () {hideotherc1()};
+          document.getElementById("w1").onclick = function () {hideotherc1()};
+          document.getElementById("r1").onclick = function () {hideotherc1()};
+          document.getElementById("g1").onclick = function () {hideotherc1()};
+          document.getElementById("bk2").onclick = function () {hideotherc2()};
+          document.getElementById("b2").onclick = function () {hideotherc2()};
+          document.getElementById("w2").onclick = function () {hideotherc2()};
+          document.getElementById("r2").onclick = function () {hideotherc2()};
+          document.getElementById("g2").onclick = function () {hideotherc2()};
+          document.getElementById("bk3").onclick = function () {hideotherc3()};
+          document.getElementById("b3").onclick = function () {hideotherc3()};
+          document.getElementById("w3").onclick = function () {hideotherc3()};
+          document.getElementById("r3").onclick = function () {hideotherc3()};
+          document.getElementById("g3").onclick = function () {hideotherc3()};
+          document.getElementById("bk4").onclick = function () {hideotherc4()};
+          document.getElementById("b4").onclick = function () {hideotherc4()};
+          document.getElementById("w4").onclick = function () {hideotherc4()};
+          document.getElementById("r4").onclick = function () {hideotherc4()};
+          document.getElementById("g4").onclick = function () {hideotherc4()};
+          document.getElementById("bk5").onclick = function () {hideotherc5()};
+          document.getElementById("b5").onclick = function () {hideotherc5()};
+          document.getElementById("w5").onclick = function () {hideotherc5()};
+          document.getElementById("r5").onclick = function () {hideotherc5()};
+          document.getElementById("g5").onclick = function () {hideotherc5()};
+
+          function hideotherm1() {
+              document.getElementById("othermat1").style.display = 'none';
+              xmat = 0;
+          }
+
+          function hideotherm2() {
+              document.getElementById("mat2").style.display = 'none';
+              xmat2 = 0;
+          }
+
+          function hideotherm3() {
+              document.getElementById("mat3").style.display = 'none';
+              xmat3 = 0;
+          }
+
+          function hideotherm4() {
+              document.getElementById("mat4").style.display = 'none';
+              xmat4 = 0;
+          }
+
+          function hideotherm5() {
+              document.getElementById("mat5").style.display = 'none';
+              xcol5 = 0;
+          }
+
+          function hideotherc1() {
+              document.getElementById("othercol1").style.display = 'none';
+              xcol = 0;
+          }
+
+          function hideotherc2() {
+              document.getElementById("col2").style.display = 'none';
+              xcol2 = 0;
+          }
+
+          function hideotherc3() {
+              document.getElementById("col3").style.display = 'none';
+              xcol3 = 0;
+          }
+
+          function hideotherc4() {
+              document.getElementById("col4").style.display = 'none';
+              xcol4 = 0;
+          }
+
+          function hideotherc5() {
+              document.getElementById("col5").style.display = 'none';
+              xcol5 = 0;
+          }
+
+          function showmulti(amount) {
+              if (amount === 1) {
+                  $("#mcol2").hide();
+                  $("#mmat2").hide();
+                  $("#mcol3").hide();
+                  $("#mmat3").hide();
+                  $("#mcol4").hide();
+                  $("#mmat4").hide();
+                  $("#mcol5").hide();
+                  $("#mmat5").hide();
+
+              }
+
+              if (amount === 2) {
+                  $("#mcol2").show();
+                  $("#mmat2").show();
+                  $("#mcol3").hide();
+                  $("#mmat3").hide();
+                  $("#mcol4").hide();
+                  $("#mmat4").hide();
+                  $("#mcol5").hide();
+                  $("#mmat5").hide();
+
+              }
+              if (amount === 3) {
+                  $("#mcol2").show();
+                  $("#mmat2").show();
+                  $("#mcol3").show();
+                  $("#mmat3").show();
+                  $("#mcol4").hide();
+                  $("#mmat4").hide();
+                  $("#mcol5").hide();
+                  $("#mmat5").hide();
+              }
+              if (amount === 4) {
+                  $("#mcol2").show();
+                  $("#mmat2").show();
+                  $("#mcol3").show();
+                  $("#mmat3").show();
+                  $("#mcol4").show();
+                  $("#mmat4").show();
+                  $("#mcol5").hide();
+                  $("#mmat5").hide();
+              }
+              if (amount === 5) {
+                  $("#mcol2").show();
+                  $("#mmat2").show();
+                  $("#mcol3").show();
+                  $("#mmat3").show();
+                  $("#mcol4").show();
+                  $("#mmat4").show();
+                  $("#mcol5").show();
+                  $("#mmat5").show();
+              }
+
+          }
+
+          function showmat() {
+              if (xmat === 0) {
+                  document.getElementById("othermat1").style.display = 'block';
+                  xmat = 1;
+                  return;
+              }
+              if (xmat === 1) {
+                  document.getElementById("othermat1").style.display = 'none';
+                  xmat = 0;
+              }
+          }
+
+          function showmat2() {
+              if (xmat2 === 0) {
+                  document.getElementById("mat2").style.display = 'block';
+                  xmat2 = 1;
+                  return;
+              }
+              if (xmat2 === 1) {
+                  document.getElementById("mat2").style.display = 'none';
+                  xmat2 = 0;
+              }
+          }
+          function showmat3() {
+              if (xmat3 === 0) {
+                  document.getElementById("mat3").style.display = 'block';
+                  xmat3 = 1;
+                  return;
+              }
+              if (xmat3 === 1) {
+                  document.getElementById("mat3").style.display = 'none';
+                  xmat3 = 0;
+              }
+          }
+
+          function showmat4() {
+              if (xmat4 === 0) {
+                  document.getElementById("mat4").style.display = 'block';
+                  xmat4 = 1;
+                  return;
+              }
+              if (xmat4 === 1) {
+                  document.getElementById("mat4").style.display = 'none';
+                  xmat4 = 0;
+              }
+          }
+
+          function showmat5() {
+              if (xmat5 === 0) {
+                  document.getElementById("mat5").style.display = 'block';
+                  xmat5 = 1;
+                  return;
+              }
+              if (xmat5 === 1) {
+                  document.getElementById("mat5").style.display = 'none';
+                  xmat5 = 0;
+              }
+          }
+
+          function showcol() {
+              if (xcol === 0) {
+                  document.getElementById("othercol1").style.display = 'block';
+                  xcol = 1;
+                  return;
+              }
+              if (xcol === 1) {
+                  document.getElementById("othercol1").style.display = 'none';
+                  xcol = 0;
+              }
+          }
+          function showcol2() {
+              if (xcol2 === 0) {
+                  document.getElementById("col2").style.display = 'block';
+                  xcol2 = 1;
+                  return;
+              }
+              if (xcol2 === 1) {
+                  document.getElementById("col2").style.display = 'none';
+                  xcol2 = 0;
+              }
+          }
+          function showcol3() {
+              if (xcol3 === 0) {
+                  document.getElementById("col3").style.display = 'block';
+                  xcol3 = 1;
+                  return;
+              }
+              if (xcol3 === 1) {
+                  document.getElementById("col3").style.display = 'none';
+                  xcol3 = 0;
+              }
+          }
+          function showcol4() {
+              if (xcol4 === 0) {
+                  document.getElementById("col4").style.display = 'block';
+                  xcol4 = 1;
+                  return;
+              }
+              if (xcol4 === 1) {
+                  document.getElementById("col4").style.display = 'none';
+                  xcol4 = 0;
+              }
+          }
+          function showcol5() {
+              if (xcol5 === 0) {
+                  document.getElementById("col5").style.display = 'block';
+                  xcol5 = 1;
+                  return;
+              }
+              if (xcol5 === 1) {
+                  document.getElementById("col5").style.display = 'none';
+                  xcol5 = 0;
+              }
+          }
+
+          function showin() {
+              if (xin === 0) {
+                  document.getElementById("otherin1").style.display = 'block';
+                  xin = 1;
+                  return;
+              }
+              if (xin === 1) {
+                  document.getElementById("otherin1").style.display = 'none';
+                  xin = 0;
+              }
+          }
+          function showq() {
+              if (xq === 0) {
+                  document.getElementById("otherq1").style.display = 'block';
+                  xq = 1;
+                  return;
+              }
+              if (xq === 1) {
+                  document.getElementById("otherq1").style.display = 'none';
+                  xq = 0;
+              }
+          }
+          function showad() {
+              if (x === 0) {
+                  document.getElementById("multishow").style.display = 'block';
+                  document.getElementById("watershow").style.display = 'block';
+                  x = 1;
+                  return;
+              }
+              if (x === 1) {
+                  document.getElementById("multishow").style.display = 'none';
+                  document.getElementById("watershow").style.display = 'none';
+                  x = 0;
+              }
+          }
+
+
+      })
+
+  </script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-info navbar-dark sticky-top">
+  {% if session.get('loggedin') == True %}
+    {% if session.get('maker') == True %}
+        <a class="navbar-brand" href="clientHomemaker.html">
+              <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+        </a>
+    {% else %}
+      <a class="navbar-brand" href="clientHome.html">
+          <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+      </a>
+    {% endif %}
+  {% else %}
+    <a class="navbar-brand" href="index.html">
+          <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+    </a>
+  {% endif %}
+  <button class="navbar-toggler justify-content-start" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+     <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+          {{ variable }}
+          <img src="{{ pfp }}" style="width: 25px; border-radius:50%; height: 25px" alt="">
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="profile.html">Profile</a>
+        <a class="dropdown-item" href="#">Settings</a>
+          <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="logout.html">Log Out</a>
+      </div>
+    </li>
+    </ul>
+  </div>
+</nav>
+
+
+<form action="{{ url_for('order') }}" method="post" enctype="multipart/form-data">
+    <div class="container pt-5" style="padding-bottom: 100px">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Material Selection -->
+                <div class="card shadow-lg">
+                    <header class="card-header" style="padding: 0">
+                        <h5 class="card-title mt-2 text-center" style="padding: 3px">Order</h5>
+                    </header>
+                    <article class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item" style="padding-top: 25px">
+                                <h5>Material <small>Select the material you would like to have your file printed in. PLA is most standard.</small></h5>
+                            <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;">
+                                <label class="btn btn-lg btn-outline-info active">
+                                    <input type="radio" name="material" autocomplete="off" value="pla" id="PLA1"> PLA
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material" autocomplete="off" value="abs" id="ABS1"> ABS
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material" autocomplete="off" value="nylon" id="NY1"> Nylon
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material" autocomplete="off" value="resin" id="R1"> Resin
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material" autocomplete="off" value="petg" id="PET1"> PET(G)
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" autocomplete="off" id="othermat"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                </label>
+                            </div>
+                                <!-- Make this code snippet only show when "other" is selected -->
+                                <div class="form-group" id="othermat1">
+                                    <label></label>
+                                    <label for="other"></label><label for="othermat1"></label><input class="form-control border border-info text-center" type="text" placeholder="Specify other material." name="materialo">
+                                </div>
+
+                            <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;" id="mmat2">
+                                <label class="btn btn-lg btn-outline-info active">
+                                    <input type="radio" name="material2" autocomplete="off" value="pla" id="PLA2"> PLA
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material2" autocomplete="off" value="abs" id="ABS2"> ABS
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material2" autocomplete="off" value="nylon" id="NY2"> Nylon
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material2" autocomplete="off" value="resin" id="R2"> Resin
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material2" autocomplete="off" value="petg" id="PET2"> PET(G)
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" autocomplete="off" id="showmat2"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                </label>
+                            </div>
+                                <!-- Make this code snippet only show when "other" is selected -->
+                                <div class="form-group" id="mat2">
+                                    <label></label>
+                                    <label for="other"></label><label for="othermat2"></label><input class="form-control border border-info text-center" id="othermat2" type="text" placeholder="Specify other material." name="materialo2">
+                                </div>
+
+                            <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;" id="mmat3">
+                                <label class="btn btn-lg btn-outline-info active">
+                                    <input type="radio" name="material3" autocomplete="off" value="pla" id="PLA3"> PLA
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material3" autocomplete="off" value="abs" id="ABS3"> ABS
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material3" autocomplete="off" value="nylon" id="NY3"> Nylon
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material3" autocomplete="off" value="resin" id="R3"> Resin
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material3" autocomplete="off" value="petg" id="PET3"> PET(G)
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" autocomplete="off" id="showmat3"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                </label>
+                            </div>
+                                <!-- Make this code snippet only show when "other" is selected -->
+                                <div class="form-group" id="mat3">
+                                    <label></label>
+                                    <label for="other"></label><label for="othermat3"></label><input class="form-control border border-info text-center" type="text" placeholder="Specify other material." name="materialo3">
+                                </div>
+
+                            <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;" id="mmat4">
+                                <label class="btn btn-lg btn-outline-info active">
+                                    <input type="radio" name="material4" autocomplete="off" value="pla" id="PLA4"> PLA
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material4" autocomplete="off" value="abs" id="ABS4"> ABS
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material4" autocomplete="off" value="nylon" id="NY4"> Nylon
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material4" autocomplete="off" value="resin" id="R4"> Resin
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material4" autocomplete="off" value="petg" id="PET4"> PET(G)
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" autocomplete="off" id="showmat4"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                </label>
+                            </div>
+                                <!-- Make this code snippet only show when "other" is selected -->
+                                <div class="form-group" id="mat4">
+                                    <label></label>
+                                    <label for="other"></label><label for="othermat4"></label><input class="form-control border border-info text-center" type="text" placeholder="Specify other material." name="materialo4">
+                                </div>
+
+                            <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;" id="mmat5">
+                                <label class="btn btn-lg btn-outline-info active">
+                                    <input type="radio" name="material5" autocomplete="off" value="pla" id="PLA5"> PLA
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material5" autocomplete="off" value="abs" id="ABS5"> ABS
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material5" autocomplete="off" value="nylon" id="NY5"> Nylon
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material5" autocomplete="off" value="resin" id="R5"> Resin
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="material5" autocomplete="off" value="petg" id="PET5"> PET(G)
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" autocomplete="off" id="showmat5"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                </label>
+                            </div>
+                                <!-- Make this code snippet only show when "other" is selected -->
+                                <div class="form-group" id="mat5">
+                                    <label></label>
+                                    <label for="other"></label><label for="othermat5"></label><input class="form-control border border-info text-center" type="text" placeholder="Specify other material." name="materialo5">
+                                </div>
+                                <!-- End of code snippet -->
+                            </li>
+                            <!-- End Material Selection -->
+
+                            <!-- Colour Selection -->
+                            <li class="list-group-item" style="padding-top: 25px" >
+                                <h5>Colour <small>Choose the colour you would like your print in. Multiple colours can be configured in advanced options.</small></h5>
+                            <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;">
+                                <label class="btn btn-lg btn-outline-info active">
+                                    <input type="radio" name="colour" autocomplete="off" value="black" id="bk1"> Black
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour" autocomplete="off" value="white" id="w1"> White
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour" autocomplete="off" value="red" id="r1"> Red
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour" autocomplete="off" value="green" id="g1"> Green
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour" autocomplete="off" value="blue" id="b1"> Blue
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" autocomplete="off" id="othercol"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                </label>
+
+                            </div>
+                                <!-- Make this code snippet only show when "other" is selected -->
+                                <div class="form-group" id="othercol1">
+                                    <label></label>
+                                    <label for="other"></label><label for="othercol1"></label><input class="form-control border border-info text-center" type="text" placeholder="Specify other colour." name="colouro">
+                                </div>
+                                <!-- End of code snippet -->
+                            <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;" id="mcol2">
+                                <label class="btn btn-lg btn-outline-info active">
+                                    <input type="radio" name="colour2" autocomplete="off" value="black" id="bk2">   Black
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour2" autocomplete="off" value="white" id="w2"> White
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour2" autocomplete="off" value="red" id="r2"> Red
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour2" autocomplete="off" value="green" id="g2"> Green
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour2" autocomplete="off" value="blue" id="b2"> Blue
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" autocomplete="off" id="showcol2"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                </label>
+
+                            </div>
+                                <!-- Make this code snippet only show when "other" is selected -->
+                                <div class="form-group" id="col2">
+                                    <label></label>
+                                    <label for="other"></label><label for="othercol2"></label><input class="form-control border border-info text-center" type="text" placeholder="Specify other colour." name="colouro2">
+                                </div>
+
+                            <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;" id="mcol3">
+                                <label class="btn btn-lg btn-outline-info active">
+                                    <input type="radio" name="colour3" autocomplete="off" value="black" id="bk3">   Black
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour3" autocomplete="off" value="white" id="w3"> White
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour3" autocomplete="off" value="red" id="r3"> Red
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour3" autocomplete="off" value="green" id="g3"> Green
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour3" autocomplete="off" value="blue" id="b3"> Blue
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" autocomplete="off" id="showcol3"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                </label>
+
+                            </div>
+                                <!-- Make this code snippet only show when "other" is selected -->
+                                <div class="form-group" id="col3">
+                                    <label></label>
+                                    <label for="other"></label><label for="othercol3"></label><input class="form-control border border-info text-center" type="text" placeholder="Specify other colour." name="colouro3">
+                                </div>
+
+                            <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;" id="mcol4">
+                                <label class="btn btn-lg btn-outline-info active">
+                                    <input type="radio" name="colour4" autocomplete="off" value="black" id="bk4">   Black
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour4" autocomplete="off" value="white" id="w4"> White
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour4" autocomplete="off" value="red" id="r4"> Red
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour4" autocomplete="off" value="green" id="g4"> Green
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour4" autocomplete="off" value="blue" id="b4"> Blue
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" autocomplete="off" id="showcol4"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                </label>
+
+                            </div>
+                                <!-- Make this code snippet only show when "other" is selected -->
+                                <div class="form-group" id="col4">
+                                    <label></label>
+                                    <label for="other"></label><label for="othercol4"></label><input class="form-control border border-info text-center" type="text" placeholder="Specify other colour." name="colouro4">
+                                </div>
+
+                            <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;" id="mcol5">
+                                <label class="btn btn-lg btn-outline-info active">
+                                    <input type="radio" name="colour5" autocomplete="off" value="black" id="bk5">   Black
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour5" autocomplete="off" value="white" id="w5"> White
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour5" autocomplete="off" value="red" id="r5"> Red
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour5" autocomplete="off" value="green" id="g5"> Green
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" name="colour5" autocomplete="off" value="blue" id="b5"> Blue
+                                </label>
+                                <label class="btn btn-lg btn-outline-info">
+                                    <input type="radio" autocomplete="off" id="showcol5"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                </label>
+
+                            </div>
+                                <!-- Make this code snippet only show when "other" is selected -->
+                                <div class="form-group" id="col5">
+                                    <label></label>
+                                    <label for="other"></label><label for="othercol5"></label><input class="form-control border border-info text-center" type="text" placeholder="Specify other colour." name="colouro5">
+                                </div>
+                            </li>
+                            <!-- End Colour Selection -->
+
+                            <!-- File Selection -->
+                            <li class="list-group-item" style="padding: 25px">
+                                <h5>File <small>Upload file, accepted file type: .stl</small></h5>
+                                <div class="custom-file col-md-12" style="padding: 10px;">
+                                    <input type="file" class="custom-file-input form-control" id="customFile" name="file"
+                                        accept=".stl">
+                                    <label class="custom-file-label text-center border border-info" for="customFile">Choose file: STL</label>
+                                </div>
+                                <script>
+                                    $(".custom-file-input").on("change", function() {
+                                        const fileName = $(this).val().split("\\").pop();
+                                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                                        });
+                                </script>
+                            </li>
+                            <!-- End File Selection -->
+                            <!-- Infill Select -->
+                            <li class="list-group-item" style="padding-top: 25px">
+                                <h5>Infill <small>Adjusts the density of infill of the print.</small></h5>
+                                <div class="btn-group btn-group-toggle col-md-12 " data-toggle="buttons" style="padding: 10px;">
+                                    <label class="btn btn-lg btn-outline-info active">
+                                        <input type="radio" name="infill" autocomplete="off" value="10"> 10%
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="infill" autocomplete="off" value="25"> 25%
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="infill" autocomplete="off" value="50"> 50%
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="infill" autocomplete="off" value="75"> 75%
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="infill" autocomplete="off" value="100"> 100%
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" autocomplete="off" id="otherin"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label></label>
+                                    <label for="other"></label><label for="otherin1"></label><input class="form-control border border-info text-center" id="otherin1" type="text" placeholder="Specify custom infill density." name="infillo">
+                                </div>
+                            </li>
+                            <!-- End Infill Select -->
+                            <!-- Quality Select -->
+                            <li class="list-group-item" style="padding-top: 25px">
+                                <h5>Quality <small>The height of each layer in mm. Higher values produce faster prints in lower resolution and lower values vise versa.</small></h5>
+                                <div class="btn-group btn-group-toggle col-md-12 " data-toggle="buttons" style="padding: 10px;">
+                                    <label class="btn btn-lg btn-outline-info active">
+                                        <input type="radio" name="quality" autocomplete="off" value="0.3"> ~0.3mm
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="quality" autocomplete="off" value="0.2"> ~0.2mm
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="quality" autocomplete="off" value="0.1"> ~0.1mm
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="quality" autocomplete="off" value="0.05"> ~0.05mm
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" autocomplete="off" id="otherq"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-three-dots" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"></path>
+                                                                                                            </svg>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label></label>
+                                    <label for="other"></label><label for="otherq1"></label><input class="form-control border border-info text-center" id="otherq1" type="text" placeholder="Specify quality." name="qualityo">
+                                </div>
+                            </li>
+
+                            <li class="list-group-item" style="padding: 20px">
+                                <h5>Quantity <small>Amount of copies made</small></h5>
+                                <div class="custom-file col-md-12" style="padding: 10px;">
+                                    <input type="text" class="form-control" id="Quantity" name="Quantity">
+                                    <label for="Quantity"></label>
+                                </div>
+                            </li>
+
+                            {% if Failed == 1 %}
+                                <div class="form-group col-md-13 text-center">
+                                    <div class="alert alert-danger">
+                                        <strong>Please Fill In All Boxes</strong>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if Match == 0 %}
+                                <div class="form-group col-md-13 text-center">
+                                    <div class="alert alert-danger">
+                                        <strong>There Are No Matches For This Combination</strong>
+                                    </div>
+                                </div>
+
+                            {% endif %}
+
+                            <!-- End Quality Select -->
+                            <!-- Advanced Options -->
+                            <li class="list-group-item text-center" style="padding-top: 25px">
+                                <h5 class="text-center">Advanced Options</h5>
+
+                                <div class="btn-group btn-group-toggle col-md-4" data-toggle="buttons" style="padding: 10px;">
+                                    <label class="btn btn-lg btn-outline-info active">
+                                        <input type="checkbox" name="advanced" autocomplete="off" id="advanced"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-arrow-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M4.646 9.646a.5.5 0 0 1 .708 0L8 12.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z"></path>
+                                                                                                              <path fill-rule="evenodd" d="M8 2.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-1 0V3a.5.5 0 0 1 .5-.5z"></path>
+                                                                                                            </svg>
+                                    </label>
+
+                                </div>
+                            </li>
+                            <button type="submit" class="btn btn-info btn-block" name="submit"> Continue  </button>
+                            <!-- End advanced options -->
+                            <!-- Water soluble support material -->
+                            <li class="list-group-item" style="padding-top: 25px" id="watershow">
+                                <h5>Water Soluble Support Material <small>Some printers have the ability to print with two different filaments, allowing support material to be printed in a different material and dissolved away after the print is finished.</small></h5>
+                                <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;">
+                                    <label class="btn btn-lg btn-outline-info active text-center">
+                                        <input type="checkbox" name="waters" autocomplete="off" value="y"> <svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-check2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                                                              <path fill-rule="evenodd" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"></path>
+                                                                                                            </svg>
+                                    </label>
+                                </div>
+                            </li>
+                            <!-- End Water soluble support material -->
+                            <!-- Multi Extrude -->
+                            <li class="list-group-item" style="padding-top: 25px" id="multishow">
+                                <h5>Multi Extrude <small>Some printers have the ability to print with two or more different coloured filaments at the same time. Select the number of different colours you would like</small></h5>
+                                <div class="btn-group btn-group-toggle col-md-12" data-toggle="buttons" style="padding: 10px;">
+                                    <label class="btn btn-lg btn-outline-info active text-center">
+                                        <input type="radio" name="multi" autocomplete="off" value="1" id="m1"> None
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="multi" autocomplete="off" value="2" id="m2"> 2
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="multi" autocomplete="off" value="3" id="m3"> 3
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="multi" autocomplete="off" value="4" id="m4"> 4
+                                    </label>
+                                    <label class="btn btn-lg btn-outline-info">
+                                        <input type="radio" name="multi" autocomplete="off" value="5" id="m5"> 5
+                                    </label>
+                                </div>
+
+                            </li>
+                            <!-- End Multi Extrude -->
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MakerChain</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-info navbar-dark sticky-top">
+  <a class="navbar-brand" href="index.html">
+      <img src="../static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+  </a>
+  <button class="navbar-toggler justify-content-start" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+
+<div class="container pt-5"> <!-- Login Window -->
+
+<!-- test -->
+
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="shadow-lg card">
+<header class="card-header">
+
+	<h4 class="card-title mt-2">Options</h4>
+</header>
+<article class="card-body">
+<div class="form-group">
+<form action="{{ url_for('viewoptions') }}" method="post">
+
+    {% if EstimatedInv != True %}
+        <div style="text-align: center;">Estimated Price: ${{ Estimate }}</div>
+    {% endif %}
+
+    {% if Applicable == 1 %}
+        <img src="{{ pfp[0] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[0] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[0] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[0] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[0] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[0] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[0] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit1" value="Choose">
+
+    {% elif Applicable == 2 %}
+        <img src="{{ pfp[0] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[0] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[0] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[0] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[0] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[0] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[0] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit1" value="Choose">
+
+        <br>
+        <img src="{{ pfp[1] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[1] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[1] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[1] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[1] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[1] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[1] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit2" value="Choose">
+
+    {% elif Applicable == 3 %}
+        <img src="{{ pfp[0] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[0] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[0] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[0] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[0] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[0] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[0] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit1" value="Choose">
+
+        <img src="{{ pfp[1] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[1] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[1] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[1] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[1] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[1] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[1] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit2" value="Choose">
+
+        <img src="{{ pfp[2] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[2] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[2] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[2] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[2] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[2] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[2] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit3" value="Choose">
+
+    {% elif Applicable == 4 %}
+        <img src="{{ pfp[0] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[0] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[0] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[0] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[0] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[0] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[0] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit1" value="Choose">
+
+        <img src="{{ pfp[1] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[1] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[1] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[1] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[1] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[1] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[1] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit2" value="Choose">
+
+        <img src="{{ pfp[2] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[2] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[2] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[2] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[2] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[2] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[2] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit3" value="Choose">
+
+        <img src="{{ pfp[3] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+        <h2>{{ Names[3] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[3] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[3] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[3] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[3] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[3] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit4" value="Choose">
+
+    {% elif Applicable == 5 %}
+        <img src="{{ pfp[0] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[0] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[0] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[0] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[0] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[0] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[0] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit1" value="Choose">
+
+        <img src="{{ pfp[1] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[1] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[1] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[1] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[1] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[1] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[1] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit2" value="Choose">
+
+        <img src="{{ pfp[2] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+          <h2>{{ Names[2] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[2] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[2] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[2] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[2] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[2] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit3" value="Choose">
+
+        <img src="{{ pfp[3] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+        <h2>{{ Names[3] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[3] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[3] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[3] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[3] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[3] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit4" value="Choose">
+
+        <img src="{{ pfp[4] }}" style="width: 256px; height: 256px; border-radius: 50%; padding: 10px; margin-left: 15px;">
+
+        <h2>{{ Names[4] }}</h2>
+              <h5>Printers</h5>
+              <p>{{ Printers[4] }}</p>
+              <h5>Materials and Colours Available</h5>
+              <p>{{ MatCol[4] }}</p>
+              <h5>Address</h5>
+              <p>{{ Address[4] }}</p>
+              <h5>Distance</h5>
+              <p>{{ Distance[4] }}km</p>
+              <h5>Email</h5>
+              <p>{{ Email[4] }}</p>
+
+        <input type="submit" class="btn btn-info btn-block" name="submit4" value="Choose">
+
+    {% endif %}
+
+</form>
+
+
+</div> <!-- form-group// -->
+</article> <!-- card-body end .// -->
+</div> <!-- card.// -->
+</div> <!-- col.//-->
+</div> <!-- row.//-->
+</div>

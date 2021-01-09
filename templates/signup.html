@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MakerChain</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-info navbar-dark sticky-top">
+  <a class="navbar-brand" href="index.html">
+      <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+  </a>
+  <button class="navbar-toggler justify-content-start" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+
+<div class="container pt-5"> <!-- Login Window -->
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card shadow-lg">
+<header class="card-header">
+
+	<h4 class="card-title mt-2">Sign up</h4>
+</header>
+<article class="card-body">
+<form action="{{ url_for('signup') }}" method="post">
+	<div class="form-row">
+		<div class="col form-group">
+			<label for="validationServer01">First name </label>
+		  	<input type="text" class="form-control is-valid" id="validationServer01" name="fname" required>
+		</div> <!-- form-group end.// -->
+		<div class="col form-group">
+			<label for="validationServer01">Last name</label>
+		  	<input type="text" class="form-control is-valid" id="validationServer01" placeholder="" name="lname" required>
+		</div> <!-- form-group end.// -->
+	</div> <!-- form-row end.// -->
+	<div class="form-group">
+		<label for="validationServer01">Email address</label>
+		<input type="email" class="form-control is-valid" id="validationServer01" name="email" required>
+	</div> <!-- form-group end.// -->
+
+	<div class="form-row">
+		<div class="form-group col-md-6">
+		  <label for="validationServer01">Address</label>
+		  <input type="text" class="form-control is-valid" id="validationServer01" name="address" required>
+		  <img src="/static/dashboard/unnamed.png" style="width: 128px">
+		</div> <!-- form-group end.// -->
+		<div class="form-group col-md-6">
+		  <label for="validationServer01">City</label>
+		  <select id="inputState validationServer01" class="form-control is-valid" name="city" required>
+              <option>Toronto</option>
+              <option>Ajax</option>
+		      <option>Aurora</option>
+		      <option>Brampton</option>
+		      <option>Burlington</option>
+              <option>Fonthill</option>
+		      <option>Markham</option>
+		      <option>Mississauga</option>
+              <option>Newmarket</option>
+              <option>Oakville</option>
+              <option>Oshawa</option>
+              <option>Pickering</option>
+              <option>Richmond Hill</option>
+              <option>Vaughan</option>
+              <option>Whitby</option>
+
+		  </select>
+		</div> <!-- form-group end.// -->
+	</div> <!-- form-row.// -->
+	<div class="form-group">
+		<label for="validationServer01">Create password</label>
+	    <input class="form-control is-valid" id="validationServer01" type="password" name="pass" required>
+	</div> <!-- form-group end.// -->
+    <div class="form-group">
+		<label for="validationServer01">Confirm password</label>
+	    <input class="form-control is-valid" id="validationServer01" type="password" name="cpass" required>
+	</div>
+	{% if Match == 0 %}
+		<div class="form-group col-md-13 text-center">
+			<div class="alert alert-danger">
+				<strong>The Passwords Don't Match</strong>
+			</div>
+		</div>
+	{% endif %}
+
+	{% if Email == 1 %}
+		<div class="form-group col-md-13 text-center">
+			<div class="alert alert-danger">
+				<strong>The Email You Are Trying To Register Is Already In Use</strong>
+			</div>
+		</div>
+	{% endif %}
+
+	{% if Add == 1 %}
+		<div class="form-group col-md-13 text-center">
+			<div class="alert alert-danger">
+				<strong>Address Invalid. Type it in with correct suffix or try again. If you get this error over and over, please contact makerchain.canada@gmail.com for support. Sorry for the inconvenience.</strong>
+			</div>
+		</div>
+	{% endif %}
+    <div class="form-group">
+        <button type="submit" class="btn btn-info btn-block" name="submit"> Sign Up  </button>
+    </div> <!-- form-group// -->
+    <small class="text-muted">By clicking the 'Sign Up' button, you confirm that you accept our <br> Terms of use and Privacy Policy.</small>
+</form>
+</article> <!-- card-body end .// -->
+<div class="border-top card-body text-center">Have an account? <a href="login.html">Log In</a></div>
+</div> <!-- card.// -->
+</div> <!-- col.//-->
+</div> <!-- row.//-->
+</div>
+
+
+

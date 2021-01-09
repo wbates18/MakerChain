@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MakerChain</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-info navbar-dark sticky-top">
+  <a class="navbar-brand" href="index.html">
+      <img src="../static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+  </a>
+  <button class="navbar-toggler justify-content-start" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+</nav>
+
+<div class="container pt-5"> <!-- Login Window -->
+
+<!-- test -->
+
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="shadow-lg card">
+<header class="card-header">
+
+	<h4 class="card-title mt-2">Login</h4>
+</header>
+<article class="card-body">
+<form action="{{ url_for('login') }}" method="post">
+	<div class="form-group">
+		<label>Email address</label>
+		<input type="email" class="form-control" placeholder="" name="email">
+	</div> <!-- form-group end.// -->
+
+
+	<div class="form-group">
+		<label>Password</label>
+	    <input class="form-control" type="password" name="password">
+	</div> <!-- form-group end.// -->
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-info btn-block" name="submit"> Login  </button>
+    </div> <!-- form-group// -->
+    {% if Incorrect == 1 %}
+        <div class="form-group col-md-13 text-center">
+            <div class="alert alert-danger">
+                <strong>Incorrect Password</strong>
+            </div>
+        </div>
+    {% endif %}
+    {% if Email == 0 %}
+        <div class="form-group col-md-13 text-center">
+            <div class="alert alert-danger">
+                <strong>Unknown Email</strong>
+            </div>
+        </div>
+    {% endif %}
+</form>
+</article> <!-- card-body end .// -->
+<div class="border-top card-body text-center">Need an account? <a href="signup.html">Sign Up</a></div>
+<div class="border-top card-body text-center"><a href="resetpass.html">Forgot Password?</a> </div>
+</div> <!-- card.// -->
+</div> <!-- col.//-->
+</div> <!-- row.//-->
+</div>
+
+
