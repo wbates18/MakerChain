@@ -423,7 +423,7 @@ def passv(token):
         email = serializer.loads(
             token,
             salt=app.config['SECURITY_PASSWORD_SALT'],
-            max_age=3600  # Verify
+            max_age=86400  # Verify
         )
     except:  # If not valid
 
@@ -520,7 +520,7 @@ def Chome():
         items = []
         if session['Verified'] == True:
             return render_template("clientHome.html", variable=session['name'], variable2="Signed Up",
-                                   pfp=session['pfp'])
+                                   pfp=session['pfp'], numb=3)
         else:
             return render_template("clientHome.html", variable=session['name'], variable2=False, pfp=session['pfp'])
 
@@ -591,7 +591,7 @@ def verification(token):
         email = serializer4.loads(
             token,
             salt=app.config['SECURITY_PASSWORD_SALT'],
-            max_age=3600  # If it is within a day, and all valid
+            max_age=86400  # If it is within a day, and all valid
         )
     except:
 
@@ -631,7 +631,7 @@ def verification(token):
 
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
             server.login(sender_email, password)
-            server.sendmail(sender_email, receiver_email, message.as_string())
+            server.sendmail(sender_email, receiver_email, message.as_string())  # Send email
         return render_template("LinknotValid.html")
 
     if session['email'] == email:
@@ -680,7 +680,7 @@ def ver():
                    </p>
                </body>
            </html>
-         """.format(session['tokenV'])
+         """.format(session['tokenV'])  # Confirmation email
 
     part1 = MIMEText(text, "plain")
     part2 = MIMEText(html, "html")
@@ -696,7 +696,7 @@ def ver():
     return render_template('verification.html')
 
 
-@app.route('/upgrade.html', methods=["POST", "GET"])
+@app.route('/upgrade.html', methods=["POST", "GET"])  # Upgrade to maker
 def upgrade():
     name = session['name']
     if request.method == "POST":
@@ -733,14 +733,14 @@ def upgrade():
             extruder3 = request.form.get('extrude3')
             extruder4 = request.form.get('extrude4')
             if printer == '' or size == '' or (material == [] and othermat == '') or \
-                    (colour == [] and othercolour == '') or range1 == '' or extruder1 == []:
+                    (colour == [] and othercolour == '') or range1 == '' or extruder1 == []:  # If some fields are empty
                 return render_template('upgrade.html', variable=name, NotFilled=True)
             else:
                 if (material != [] and othermat != '') or (material2 != [] and othermat2 != '') or \
-                        (material3 != [] and othermat3 != '') or (material4 != [] and othermat4 != ''):
+                        (material3 != [] and othermat3 != '') or (material4 != [] and othermat4 != ''):  # Materials or colours repeat
                     return render_template('upgrade.html', variable=name, oneMat=True)
                 else:
-                    if othermat != '' and material == []:
+                    if othermat != '' and material == []:  # Formatting
                         material = othermat + ", "
                     if othermat2 != '' and material2 == []:
                         material2 = othermat2 + ", "
@@ -820,7 +820,7 @@ def upgrade():
                     URL = "https://maps.googleapis.com/maps/api/geocode/json"
                     key = 'AIzaSyBkR6KAsXVhAM1FhMMCi9IneisUHJ_EwVQ'
                     city = 'Toronto'
-                    PARAMS = {'address': address, 'components=locality': city, 'key': key }
+                    PARAMS = {'address': address, 'components=locality': city, 'key': key }  # Distance
                     r = requests.get(url=URL, params=PARAMS).json()
                     json_longlatv = r
                     Value = json_longlatv['results'][0]['geometry']['location']
@@ -832,7 +832,7 @@ def upgrade():
                         Colour3, Material4, Colour4, LongLat, Range1, Printer, Printer2, Printer3, Printer4, Size,\
                         Size2, Size3, Size4, Extruder1, Extruder2, Extruder3, Extruder4) VALUES\
                         (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,\
-                        %s, %s, %s, %s)"
+                        %s, %s, %s, %s)"  # Insert data into db
                     temp2 = (id, name, address, material, colour, material2, colour2, material3, colour3, material4,
                              colour4, Value, range1, printer, printer2, printer3, printer4, size, size2, size3, size4,
                              extruder1, extruder2, extruder3, extruder4)
@@ -847,32 +847,30 @@ def upgrade():
     return render_template("upgrade.html", variable=name, pfp=session['pfp'])
 
 
-@app.route('/order.html', methods=["POST", "GET"])
+@app.route('/order.html', methods=["POST", "GET"])  # Order Module
 def order():
     SutableM = []
     SutableMN = []
     if request.method == "POST":
         file = request.files['file']
-        if file == "<FileStorage: '' ('application/octet-stream')>":
+        if file == "<FileStorage: '' ('application/octet-stream')>":  # If file is empty
             return render_template('order.html', Failed=1, pfp=session['pfp'], variable=session['name'])
         upload = file.stream.read()
         with open('static/UploadedFiles/Upload' + session['id'] + ".stl", 'wb') as file:
             file.write(upload)
-            file.close()
+            file.close()  # Upload file to storage temporaily for calculations
         mesh1 = trimesh.load('static/UploadedFiles/Upload' + session['id'] + ".stl")
         Length = mesh1.extents[0]
         Width = mesh1.extents[1]
         Height = mesh1.extents[2]
-        print(mesh1.volume / 1000)
-        print(mesh1.is_watertight)
         EstimateInv = False
-        valid_volume = mesh1.is_winding_consistent and mesh1.is_watertight and mesh1.volume > 0
+        valid_volume = mesh1.is_winding_consistent and mesh1.is_watertight and mesh1.volume > 0  # mesh1.volume = volume
         if valid_volume == False:
             return render_template("Invalidstl.html")
         if (mesh1.volume / 1000) > 1000:
-            EstimateInv = True
+            EstimateInv = True  # It is unrealistically large, meaning en error has occured, set into invalid mode.
         Psize = str()
-        if Width <= 100 or Length <= 100 or Height <= 100:
+        if Width <= 100 or Length <= 100 or Height <= 100:  # Calculate size
             Psize = "XS"
         if (101 <= Width <= 200) or (101 <= Length <= 200) or (101 <= Height <= 200):
             Psize = "SM"
@@ -912,11 +910,11 @@ def order():
         quality = request.form.get('quality')
         qualityo = request.form.get('qualityo')
         waters = request.form.get('waters')
-        multi = request.form.get('multi')
+        multi = request.form.get('multi')  # get all variables
         try:
             Quantity = int(Quantity)
         except:
-            return render_template('order.html', Failed=1, pfp=session['pfp'], variable=session['name'])
+            return render_template('order.html', Failed=1, pfp=session['pfp'], variable=session['name'])  # If anything in't filled or filled twice
         if Quantity == 0:
             return render_template('order.html', Failed=1, pfp=session['pfp'], variable=session['name'])
         if waters == 'y':
@@ -955,7 +953,7 @@ def order():
             colour4 = colouro4.lower()
         if colouro5 != "":
             colour5 = colouro5.lower()
-        if multi == '1' or multi == None:
+        if multi == '1' or multi == None:  # Make lists of materials and colours
             extruder = [1, 2, 3, 4, 5]
             if material == '' or colour == '':
                 return render_template('order.html', Failed=1, pfp=session['pfp'], variable=session['name'])
@@ -1008,7 +1006,7 @@ def order():
                     materials = [material, material2, material3, material4, material5]
                 colours = [colour, colour2, colour3, colour4, colour5]
 
-        # Material 1
+        # Material -- 1st step, find makers with materials available.
         query = "SELECT * FROM sys1.MUser"
         cursor.execute(query)
         conn.commit()
@@ -1019,7 +1017,7 @@ def order():
         z = 0
         for x in range(0, amount):
             zneed = len(materials)
-            for y in range(0, len(materials)):
+            for y in range(0, len(materials)):  # For each user for each material, if it is available, with colour
                 if materials[y] in result2[x][3]:
                     if materials[y] == 'waters':
                         continue
@@ -1045,7 +1043,7 @@ def order():
         if SutableM == []:
             return render_template("order.html", Match=0, pfp=session['pfp'], variable=session['name'])
 
-        #Size 2
+        #Size -- 2nd step. Find makers with materials and sizes
         query = "SELECT Size, Size2, Size3, Size4, Extruder1, Extruder2, Extruder3, Extruder4, id FROM sys1.MUser"
         cursor.execute(query)
         conn.commit()
@@ -1057,7 +1055,7 @@ def order():
                 if result[x][1] != '':
                     if result[x][2] != '':
                         if result[x][3] != '':
-                            for y in range(len(extruder)):
+                            for y in range(len(extruder)):  # For each sutable material maker, check size requirments.
                                 if result[x][4] == extruder[y]:
                                     if result[x][0] == Psize:
                                         SutableMN.append(result[x][8])
@@ -1106,7 +1104,7 @@ def order():
                                 SutableMN.append(result[x][8])
                                 break
 
-        def test(SutableM, amount):
+        def test(SutableM, amount):  # If size not available, run other sizes
             SutableMN = []
             for x in range(0, amount):
                 if result[x][8] in SutableM:
@@ -1164,8 +1162,8 @@ def order():
 
             return SutableMN
 
-        # Size Adjust 3
-        while SutableMN == []:
+        # Size Adjust -- 3rd step. If size isn't available allow all others that could work.
+        while SutableMN == []:  # If sizes aren't avaiable, run other sizes available
             if Psize == "XS":
                 PsizeL = ["XS", "SM", "ME", "LA", "XL"]
                 SutableMN = test(SutableM, amount)
@@ -1193,7 +1191,7 @@ def order():
         city = session['city']
         URL = "https://maps.googleapis.com/maps/api/geocode/json"
         key = 'AIzaSyBkR6KAsXVhAM1FhMMCi9IneisUHJ_EwVQ'
-        PARAMS = {'address': address, 'components=locality': city, 'key': key, }
+        PARAMS = {'address': address, 'components=locality': city, 'key': key, }  # Distance Calculations
         r = requests.get(url=URL, params=PARAMS).json()
         CLongLat1 = r
         Value = CLongLat1['results'][0]['geometry']['location']
@@ -1223,13 +1221,13 @@ def order():
 
                 else:
                     delivery = False
-                pairs.append((int(result2[x][0]), distance))
+                pairs.append((int(result2[x][0]), distance))  # Id, distance
         price = []
         Sort_Tuple(pairs)
         best = pairs[0][0]
         P = 0
         x = 0
-        for j in range(0, len(materials)):
+        for j in range(0, len(materials)):  # Price calculations
             if "pla" in str(materials[j]):
                 price.append(0.06)
             if materials[j] == "abs":
@@ -1303,7 +1301,7 @@ def order():
                 Mat = Mat + ", " + materials[x]
                 Col = Col + ", " + colours[x]
 
-        customerid = int(customerid)
+        customerid = int(customerid)  # All variables
         volume = float(volume)
         Psize = str(Psize)
         PriceM = float(PriceM)
@@ -1334,10 +1332,10 @@ def order():
 
         session['pairs'] = pairs
 
-        if EstimateInv == True:
+        if EstimateInv == True:  # Invalid trimesh calculation catch
             return render_template("OrderStlNotCalc.html")
 
-        return redirect(url_for('viewoptions'))
+        return redirect(url_for('viewoptions'))  # View options
     return render_template("order.html", pfp=session['pfp'], variable=session['name'])
 
 
@@ -1365,7 +1363,7 @@ def viewoptions():
     PriceT = ''
 
     if resulte[0][0] == 0:
-        PriceT = "?"
+        PriceT = "?"  # Invalid trimesh
     else:
         PriceT = float(resulte[0][0])
 
@@ -1390,7 +1388,7 @@ def viewoptions():
         if result[0][5] != "":
             if result[0][7] != "":
                 if result[0][9] != "":
-                    materials1 = str(result[0][3]).replace(",", ":").upper()
+                    materials1 = str(result[0][3]).replace(",", ":").upper()  # Formatting
                     col1 = str(result[0][4])
                     if col1[-1] == " ":
                         materialsColours1 = materials1 + (col1[:-2].title() + " - ")
@@ -1477,7 +1475,7 @@ def viewoptions():
         if result5[0][6] == None or str(result5[0][6]) == 'None':
             pfp = '/static/dashboard/picture.jpg'
         else:
-            with open('static/UploadedPictures/pfp' + str(result[0][0]), 'wb') as file:
+            with open('static/UploadedPictures/pfp' + str(result[0][0]), 'wb') as file:  # pfp fetch
                 file.write(result5[0][6])
                 file.close()
 
@@ -1485,7 +1483,7 @@ def viewoptions():
 
         PFP.append(pfp)
 
-    if request.method == "POST":
+    if request.method == "POST":  # Get choice
         makerid = int()
         email = str()
         if request.form.get('submit1') == 'Choose':
@@ -1504,7 +1502,7 @@ def viewoptions():
             makerid = Id[4]
             email = Email[4]
 
-        serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+        serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])  # Prep email
         session['tokenA'] = serializer.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
         tokenA = session['tokenA']
 
@@ -1514,7 +1512,7 @@ def viewoptions():
 
         serializer3 = URLSafeTimedSerializer(app.config['SECRET_KEY'])
         session['tokenF'] = serializer3.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
-        tokenF= session['tokenF']
+        tokenF = session['tokenF']
 
         sender_email = "makerchain.canada@gmail.com"
         receiver_email = email
@@ -1528,13 +1526,13 @@ def viewoptions():
         OrderNum = session['OrderNum']
 
         req = "SELECT Mvol, Material, Colours, Infill, Quality, File, Cid, PriceT, Quantity FROM sys1.Orders WHERE\
-         OrderNum = %s"
+         OrderNum = %s"  # 1528 - 1594 GETTING ALL INFO
         req1 = OrderNum
         cursor.execute(req, req1)
         results = list(cursor)
 
         customerid = results[0][6]
-        session['CPrice'] = results[0][7]
+        session['CPrice'] = results[0][7]  # Get all price info
 
 
         req2 = "SELECT Name, Address, Email, City FROM sys1.CUser WHERE id = %s"
@@ -1596,7 +1594,6 @@ def viewoptions():
         conn.commit()
 
 
-
         text = """\
                    Hi,
                    An order has been requested from a client:
@@ -1644,7 +1641,7 @@ def viewoptions():
                  """.format(results2[0][0], results2[0][1], results2[0][2], results[0][0], results[0][1],
                             results[0][2], results[0][3], results[0][4], results[0][8], distance, session['tokenF'],
                             session['OrderNum'], session['tokenA'], session['OrderNum'], session['tokenD'],
-                            session['OrderNum'])
+                            session['OrderNum'])  # Sending email with info
 
 
         part1 = MIMEText(text, "plain")
@@ -1656,7 +1653,7 @@ def viewoptions():
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
             server.login(sender_email, password)
-            server.sendmail(sender_email, receiver_email, message.as_string())
+            server.sendmail(sender_email, receiver_email, message.as_string())  # email send
 
         return render_template('OrderWaitForVer.html')
 
@@ -1664,7 +1661,7 @@ def viewoptions():
                            MatCol=MatCol, Printers=Printers, Applicable=Applicable, pfp=PFP, Estimate=PriceT)
 
 
-@app.route('/file/<token>/<OrderNum>')
+@app.route('/file/<token>/<OrderNum>')  # Download file for order
 def file(token, OrderNum):
 
     serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
@@ -1672,11 +1669,11 @@ def file(token, OrderNum):
         email = serializer.loads(
             token,
             salt=app.config['SECURITY_PASSWORD_SALT'],
-            max_age=86400
+            max_age=86400  # If within the day
         )
     except:
         email = session['MC']
-        serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+        serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])  # Else resend
         session['tokenA'] = serializer.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
         tokenA = session['tokenA']
 
@@ -1728,7 +1725,7 @@ def file(token, OrderNum):
             server.sendmail(sender_email, receiver_email, message.as_string())
 
         return render_template("LinknotValid.html")
-    return redirect(url_for('FileDownload'))
+    return redirect(url_for('FileDownload'))  # File download
 
 
 @app.route('/FileDownload.html')
@@ -1742,12 +1739,12 @@ def FileDownload():
 
     with open("static/UploadedFiles/File" + str(session['OrderNum']) + "O" + ".stl", 'wb') as file:
         file.write(upload)
-        file.close()
+        file.close()  # get from db
 
-    return send_file("static/UploadedFiles/File" + str(session['OrderNum']) + "O" + ".stl", as_attachment=True)
+    return send_file("static/UploadedFiles/File" + str(session['OrderNum']) + "O" + ".stl", as_attachment=True)  # Auto Download
 
 
-@app.route('/accept/<token>/<OrderNum>', methods=['GET', 'POST'])
+@app.route('/accept/<token>/<OrderNum>', methods=['GET', 'POST'])  # If accepted order
 def OAccept(token, OrderNum):
     serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
     try:
@@ -1811,14 +1808,13 @@ def OAccept(token, OrderNum):
 
         return render_template("LinknotValid.html")
 
-    est = session['CPrice']
+    est = session['CPrice']  # Invalid trimesh
     if session['CPrice'] == 0.0:
         est = "Unknown. Please download the file, slice it, and create a cost that is appropriate for the whole order"\
               " (delivery cost included)."
 
     if request.method == "POST":
-        price = request.form.get('Price')
-        DTrue = request.form.get('Delivery')
+        price = request.form.get('Price')  # Get price made by maker
 
         price = float(price)
 
@@ -1850,7 +1846,7 @@ def OAccept(token, OrderNum):
             message = MIMEMultipart('alternative')
             message['Subject'] = "Payment Request"
             message['From'] = sender_email
-            message['To'] = receiver_email
+            message['To'] = receiver_email  # SEND EMAIL TO MYSELF TO SEND OFF PAYMENT
 
             text = """\
                             
@@ -1884,7 +1880,7 @@ def OAccept(token, OrderNum):
 
             
         else:
-            percent = est / 5
+            percent = est / 5  # If wasn't trimesh invalid, check if in range
             if (est - percent) <= price <= (est + percent):
                 query = "UPDATE sys1.Orders SET PriceT = %s WHERE OrderNum = %s"
                 query2 = (price, OrderNum)
@@ -1945,7 +1941,7 @@ def OAccept(token, OrderNum):
                            Address=session['CAddress'], Failed='0')
 
 
-@app.route('/decline/<token>/<OrderNum>')
+@app.route('/decline/<token>/<OrderNum>')  # Order gets declined
 def ODecline(token, OrderNum):
     serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
     try:
@@ -2009,7 +2005,7 @@ def ODecline(token, OrderNum):
 
         return render_template("LinknotValid.html")
 
-    quer1 = "SELECT Cid FROM sys1.Orders WHERE OrderNum = %s"
+    quer1 = "SELECT Cid FROM sys1.Orders WHERE OrderNum = %s"  # Deletes order from db and sends customer email
     quer2 = session['OrderNum']
     cursor.execute(quer1, quer2)
     result = list(cursor)
@@ -2071,7 +2067,7 @@ def editprofile():
                 print("file extension not allowed") # Change to html page or maybe javascript
             else:
                 file_con1 = file.stream.read()
-                query = "UPDATE sys1.CUser SET pfp = %s WHERE id = %s"
+                query = "UPDATE sys1.CUser SET pfp = %s WHERE id = %s"  # Set pfp to new pfp
                 t = (file_con1, session['id'])
                 cursor.execute(query, t)
                 conn.commit()
@@ -2101,7 +2097,7 @@ def editprofile():
         NAddress = request.form.get("EAddress")
         NCity = request.form.get("ECity")
         NName = request.form.get("EName")
-        NEmail = request.form.get("EEmail")
+        NEmail = request.form.get("EEmail")  # Set all fields to new data if provided, if not stay the same
         if NCity != '':
             if NCity != City:
                 temp = "UPDATE sys1.CUser SET City = %s WHERE id = %s"
@@ -2165,7 +2161,7 @@ def editprofileM():
                 print("file extension not allowed")
             else:
                 file_con1 = file.stream.read()
-                query = "UPDATE sys1.CUser SET pfp = %s WHERE id = %s"
+                query = "UPDATE sys1.CUser SET pfp = %s WHERE id = %s"  # Set pfp to new pfp
                 t = (file_con1, session['id'])
                 cursor.execute(query, t)
                 conn.commit()
@@ -2192,7 +2188,7 @@ def editprofileM():
         NAddress = request.form.get("EAddress")
         NCity = request.form.get("ECity")
         NName = request.form.get("EName")
-        NEmail = request.form.get("EEmail")
+        NEmail = request.form.get("EEmail")  # Set all fields to new data if provided, if not stay the same
         if NCity != '':
             if NCity != City:
                 temp = "UPDATE sys1.CUser SET City = %s WHERE id = %s"
@@ -2236,7 +2232,6 @@ def editprofileM():
                                variable3=session['address'], variable4=session['city'], pfp=session['pfp'])
     return render_template("editprofilemaker.html", variable=session['name'], variable2=session['email'],
                            variable3=session['address'], variable4=session['city'], pfp=session['pfp'])
-
 
 
 if __name__ == '__main__':

@@ -18,19 +18,19 @@
     <body>
         <nav class="navbar navbar-expand-lg bg-info navbar-dark sticky-top">
             {% if session.get('loggedin') == True %}
-            {% if session.get('maker') == True %}
-            <a class="navbar-brand" href="clientHomemaker.html">
-                <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
-            </a>
+                {% if session.get('maker') == True %}
+                <a class="navbar-brand" href="clientHomemaker.html">
+                    <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+                </a>
+                {% else %}
+                <a class="navbar-brand" href="clientHome.html">
+                    <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+                </a>
+                {% endif %}
             {% else %}
-            <a class="navbar-brand" href="clientHome.html">
-                <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
-            </a>
-            {% endif %}
-            {% else %}
-            <a class="navbar-brand" href="index.html">
-                <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
-            </a>
+                <a class="navbar-brand" href="index.html">
+                    <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+                </a>
             {% endif %}
             <button class="navbar-toggler justify-content-start" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -115,57 +115,103 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr>
-                                                    <th scope="row">xxxxx</th>
-                                                    <td>x@gmail.com</td>
-                                                    <td>x.stl</td>
-                                                    <td>x</td>
-                                                    <td>
-                                                        <select class="form-control">
-                                                            <option>Pending</option>
-                                                            <option>Awaiting Payment</option>
-                                                            <option>Payment Received</option>
-                                                            <option>Printing</option>
-                                                            <option>Delivery</option>
-                                                            <option>Delivered</option>
-                                                            <option>Completed</option>
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">xxxxx</th>
-                                                    <td>x@gmail.com</td>
-                                                    <td>x.stl</td>
-                                                    <td>x</td>
-                                                    <td>
-                                                        <select class="form-control">
-                                                            <option>Pending</option>
-                                                            <option>Awaiting Payment</option>
-                                                            <option>Payment Received</option>
-                                                            <option>Printing</option>
-                                                            <option>Delivery</option>
-                                                            <option>Delivered</option>
-                                                            <option>Completed</option>
-                                                        </select>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">xxxxx</th>
-                                                    <td>x@gmail.com</td>
-                                                    <td>x.stl</td>
-                                                    <td>x</td>
-                                                    <td>
-                                                        <select class="form-control">
-                                                            <option>Pending</option>
-                                                            <option>Awaiting Payment</option>
-                                                            <option>Payment Received</option>
-                                                            <option>Printing</option>
-                                                            <option>Delivery</option>
-                                                            <option>Delivered</option>
-                                                            <option>Completed</option>
-                                                        </select>
-                                                    </td>
-                                                </tr>
+                                                {% if numb >= 1 %}
+                                                    <tr>
+                                                        <th scope="row">{{ name0 }}</th>
+                                                        <td>{{ email0 }}</td>
+                                                        <td>{{ file0 }}</td>
+                                                        <td>{{ quantity0 }}</td>
+                                                        <td>
+                                                            <select class="form-control">
+                                                                <option>Pending</option>
+                                                                <option>Awaiting Payment</option>
+                                                                <option>Payment Received</option>
+                                                                <option>Printing</option>
+                                                                <option>Delivery</option>
+                                                                <option>Delivered</option>
+                                                                <option>Completed</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                {% else %}
+                                                    No Orders Are In Progress
+                                                {% endif %}
+                                                {% if numb >= 2 %}
+                                                    <tr>
+                                                        <th scope="row">{{ name1 }}</th>
+                                                        <td>{{ email1 }}</td>
+                                                        <td>{{ file1 }}</td>
+                                                        <td>{{ quantity1 }}</td>
+                                                        <td>
+                                                            <select class="form-control">
+                                                                <option>Pending</option>
+                                                                <option>Awaiting Payment</option>
+                                                                <option>Payment Received</option>
+                                                                <option>Printing</option>
+                                                                <option>Delivery</option>
+                                                                <option>Delivered</option>
+                                                                <option>Completed</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numb >= 3 %}
+                                                    <tr>
+                                                        <th scope="row">{{ name2 }}</th>
+                                                        <td>{{ email2 }}</td>
+                                                        <td>{{ file2 }}</td>
+                                                        <td>{{ quantity2 }}</td>
+                                                        <td>
+                                                            <select class="form-control">
+                                                                <option>Pending</option>
+                                                                <option>Awaiting Payment</option>
+                                                                <option>Payment Received</option>
+                                                                <option>Printing</option>
+                                                                <option>Delivery</option>
+                                                                <option>Delivered</option>
+                                                                <option>Completed</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numb >= 4 %}
+                                                    <tr>
+                                                        <th scope="row">{{ name3 }}</th>
+                                                        <td>{{ email3 }}</td>
+                                                        <td>{{ file3 }}</td>
+                                                        <td>{{ quantity3 }}</td>
+                                                        <td>
+                                                            <select class="form-control">
+                                                                <option>Pending</option>
+                                                                <option>Awaiting Payment</option>
+                                                                <option>Payment Received</option>
+                                                                <option>Printing</option>
+                                                                <option>Delivery</option>
+                                                                <option>Delivered</option>
+                                                                <option>Completed</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numb >= 5 %}
+                                                    <tr>
+                                                        <th scope="row">{{ name4 }}</th>
+                                                        <td>{{ email4 }}</td>
+                                                        <td>{{ file4 }}</td>
+                                                        <td>{{ quantity4 }}</td>
+                                                        <td>
+                                                            <select class="form-control">
+                                                                <option>Pending</option>
+                                                                <option>Awaiting Payment</option>
+                                                                <option>Payment Received</option>
+                                                                <option>Printing</option>
+                                                                <option>Delivery</option>
+                                                                <option>Delivered</option>
+                                                                <option>Completed</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
                                                 </tbody>
                                             </table>
                                         </div>
