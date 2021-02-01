@@ -14,6 +14,208 @@
             background: #aaa;
         }
       </style>
+      <script type="text/javascript">
+          $(document).ready(function () {
+              let m1 = 1;
+              let m2 = 1;
+              let m3 = 1;
+              let m4 = 1;
+              let m5 = 1;
+              let mC1 = 1;
+              let mC2 = 1;
+              let mC3 = 1;
+              let mC4 = 1;
+              let mC5 = 1;
+              if (document.getElementById("MoreInfo0") != null) {
+                  document.getElementById("MoreInfo0").style.display = "none";
+              }
+              if (document.getElementById("MoreInfo1") != null) {
+                  document.getElementById("MoreInfo1").style.display = "none";
+              }
+              if (document.getElementById("MoreInfo2") != null) {
+                  document.getElementById("MoreInfo2").style.display = "none";
+              }
+              if (document.getElementById("MoreInfo3") != null) {
+                  document.getElementById("MoreInfo3").style.display = "none";
+              }
+              if (document.getElementById("MoreInfo4") != null) {
+                  document.getElementById("MoreInfo4").style.display = "none";
+              }
+              if (document.getElementById("MoreInfo0") != null) {
+                  document.getElementById("Show0").onclick = function () {ShowInfo0()};
+              }
+              if (document.getElementById("MoreInfo1") != null) {
+                  document.getElementById("Show1").onclick = function () {ShowInfo1()};
+              }
+              if (document.getElementById("MoreInfo2") != null) {
+                  document.getElementById("Show2").onclick = function () {ShowInfo2()};
+              }
+              if (document.getElementById("MoreInfo3") != null) {
+                  document.getElementById("Show3").onclick = function () {ShowInfo3()};
+              }
+              if (document.getElementById("MoreInfo4") != null) {
+                  document.getElementById("Show4").onclick = function () {ShowInfo4()};
+              }
+              if (document.getElementById("MoreInfoC1") != null) {
+                  document.getElementById("MoreInfoC1").style.display = "none";
+              }
+              if (document.getElementById("MoreInfoC2") != null) {
+                  document.getElementById("MoreInfoC2").style.display = "none";
+              }
+              if (document.getElementById("MoreInfoC3") != null) {
+                  document.getElementById("MoreInfoC3").style.display = "none";
+              }
+              if (document.getElementById("MoreInfoC4") != null) {
+                  document.getElementById("MoreInfoC4").style.display = "none";
+              }
+              if (document.getElementById("MoreInfoC0") != null) {
+                  document.getElementById("MoreInfoC0").style.display = "none";
+              }
+              if (document.getElementById("MoreInfoC0") != null) {
+                  document.getElementById("ShowC0").onclick = function () {ShowInfoC0()};
+              }
+              if (document.getElementById("MoreInfoC1") != null) {
+                  document.getElementById("ShowC1").onclick = function () {ShowInfoC1()};
+              }
+              if (document.getElementById("MoreInfoC2") != null) {
+                  document.getElementById("ShowC2").onclick = function () {ShowInfoC2()};
+              }
+              if (document.getElementById("MoreInfoC3") != null) {
+                  document.getElementById("ShowC3").onclick = function () {ShowInfoC3()};
+              }
+              if (document.getElementById("MoreInfoC4") != null) {
+                  document.getElementById("ShowC4").onclick = function () {ShowInfoC4()};
+              }
+
+              function ShowInfo0() {
+                  if (m1 === 1) {
+                      console.log("1")
+                      document.getElementById("MoreInfo0").style.display = "table-row";
+                      m1 = 2;
+                      return;
+                  }
+                  if (m1 === 2) {
+                      document.getElementById("MoreInfo0").style.display = "none";
+                      m1 = 1;
+
+                  }
+              }
+
+              function ShowInfo1() {
+                  if (m2 === 1) {
+                      document.getElementById("MoreInfo1").style.display = "table-row";
+                      m2 = 2;
+                      return;
+                  }
+                  if (m2 === 2) {
+                      document.getElementById("MoreInfo1").style.display = "none";
+                      m2 = 1;
+                  }
+              }
+
+              function ShowInfo2() {
+                  if (m3 === 1) {
+                      document.getElementById("MoreInfo2").style.display = "table-row";
+                      m3 = 2;
+                      return;
+                  }
+                  if (m3 === 2) {
+                      document.getElementById("MoreInfo2").style.display = "none";
+                      m3 = 1;
+                  }
+              }
+
+              function ShowInfo3() {
+                  if (m4 === 1) {
+                      document.getElementById("MoreInfo3").style.display = "table-row";
+                      m4 = 2;
+                      return;
+                  }
+                  if (m4 === 2) {
+                      document.getElementById("MoreInfo3").style.display = "none";
+                      m4 = 1;
+                  }
+              }
+
+              function ShowInfo4() {
+                  if (m5 === 1) {
+                      document.getElementById("MoreInfo4").style.display = "table-row";
+                      m5 = 2;
+                      return;
+                  }
+                  if (m5 === 2) {
+                      document.getElementById("MoreInfo4").style.display = "none";
+                      m5 = 1;
+                  }
+              }
+
+
+              function ShowInfoC0() {
+                  if (mC1 === 1) {
+                      document.getElementById("MoreInfoC0").style.display = "table-row";
+                      mC1 = 2;
+                      return;
+                  }
+                  if (mC1 === 2) {
+                      document.getElementById("MoreInfoC0").style.display = "none";
+                      mC1 = 1;
+
+                  }
+              }
+
+              function ShowInfoC1() {
+                  if (mC2 === 1) {
+                      console.log("1")
+                      document.getElementById("MoreInfoC1").style.display = "table-row";
+                      mC2 = 2;
+                      return;
+                  }
+                  if (mC2 === 2) {
+                      document.getElementById("MoreInfoC1").style.display = "none";
+                      mC2 = 1;
+                  }
+              }
+
+              function ShowInfoC2() {
+                  if (mC3 === 1) {
+                      console.log("2")
+                      document.getElementById("MoreInfoC2").style.display = "table-row";
+                      mC3 = 2;
+                      return;
+                  }
+                  if (mC3 === 2) {
+                      document.getElementById("MoreInfoC2").style.display = "none";
+                      mC3 = 1;
+                  }
+              }
+
+              function ShowInfoC3() {
+                  if (mC4 === 1) {
+                      document.getElementById("MoreInfoC3").style.display = "table-row";
+                      mC4 = 2;
+                      return;
+                  }
+                  if (mC4 === 2) {
+                      document.getElementById("MoreInfoC3").style.display = "none";
+                      mC4 = 1;
+                  }
+              }
+
+              function ShowInfoC4() {
+                  if (mC5 === 1) {
+                      document.getElementById("MoreInfoC4").style.display = "table-row";
+                      mC5 = 2;
+                      return;
+                  }
+                  if (mC5 === 2) {
+                      document.getElementById("MoreInfoC4").style.display = "none";
+                      mC5 = 1;
+                  }
+              }
+
+          })
+
+      </script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg bg-info navbar-dark sticky-top">
@@ -112,105 +314,92 @@
                                                     <th scope="col">File</th>
                                                     <th scope="col">Quantity</th>
                                                     <th scope="col">Progress</th>
+                                                    <th scope="col">Other Specs</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {% if numb >= 1 %}
+                                                {% if numbP >= 1 %}
                                                     <tr>
-                                                        <th scope="row">{{ name0 }}</th>
-                                                        <td>{{ email0 }}</td>
-                                                        <td>{{ file0 }}</td>
-                                                        <td>{{ quantity0 }}</td>
-                                                        <td>
-                                                            <select class="form-control">
-                                                                <option>Pending</option>
-                                                                <option>Awaiting Payment</option>
-                                                                <option>Payment Received</option>
-                                                                <option>Printing</option>
-                                                                <option>Delivery</option>
-                                                                <option>Delivered</option>
-                                                                <option>Completed</option>
-                                                            </select>
-                                                        </td>
+                                                        <th scope="row">{{ nameP[0] }}</th>
+                                                        <td>{{ emailP[0] }}</td>
+                                                        <td><a href="FileDownloadP1.html">File Download</a></td>
+                                                        <td>{{ quantityP[0] }}</td>
+                                                        <td>{{ progressP[0] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show0">More Info</button></td>
                                                     </tr>
-                                                {% else %}
-                                                    No Orders Are In Progress
-                                                {% endif %}
-                                                {% if numb >= 2 %}
-                                                    <tr>
-                                                        <th scope="row">{{ name1 }}</th>
-                                                        <td>{{ email1 }}</td>
-                                                        <td>{{ file1 }}</td>
-                                                        <td>{{ quantity1 }}</td>
-                                                        <td>
-                                                            <select class="form-control">
-                                                                <option>Pending</option>
-                                                                <option>Awaiting Payment</option>
-                                                                <option>Payment Received</option>
-                                                                <option>Printing</option>
-                                                                <option>Delivery</option>
-                                                                <option>Delivered</option>
-                                                                <option>Completed</option>
-                                                            </select>
-                                                        </td>
+                                                    <tr id="MoreInfo0">
+                                                        <td>Infill: {{ infillP[0] }}</td>
+                                                        <td>Quality: {{ qualityP[0] }}</td>
+                                                        <td>Distance: {{ distanceP[0] }}</td>
+                                                        <td>Materials And Colours: {{ FinalP[0] }}</td>
                                                     </tr>
                                                 {% endif %}
-                                                {% if numb >= 3 %}
+                                                {% if numbP >= 2 %}
                                                     <tr>
-                                                        <th scope="row">{{ name2 }}</th>
-                                                        <td>{{ email2 }}</td>
-                                                        <td>{{ file2 }}</td>
-                                                        <td>{{ quantity2 }}</td>
-                                                        <td>
-                                                            <select class="form-control">
-                                                                <option>Pending</option>
-                                                                <option>Awaiting Payment</option>
-                                                                <option>Payment Received</option>
-                                                                <option>Printing</option>
-                                                                <option>Delivery</option>
-                                                                <option>Delivered</option>
-                                                                <option>Completed</option>
-                                                            </select>
-                                                        </td>
+                                                        <th scope="row">{{ nameP[1] }}</th>
+                                                        <td>{{ emailP[1] }}</td>
+                                                        <td><a href="FileDownloadP2.html">File Download</a></td>
+                                                        <td>{{ quantityP[1] }}</td>
+                                                        <td>{{ progressP[1] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show1">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfo1">
+                                                        <td>Infill: {{ infillP[1] }}</td>
+                                                        <td>Quality: {{ qualityP[1] }}</td>
+                                                        <td>Distance: {{ distanceP[1] }}</td>
+                                                        <td>Materials And Colours: {{ FinalP[1] }}</td>
                                                     </tr>
                                                 {% endif %}
-                                                {% if numb >= 4 %}
+                                                {% if numbP >= 3 %}
                                                     <tr>
-                                                        <th scope="row">{{ name3 }}</th>
-                                                        <td>{{ email3 }}</td>
-                                                        <td>{{ file3 }}</td>
-                                                        <td>{{ quantity3 }}</td>
-                                                        <td>
-                                                            <select class="form-control">
-                                                                <option>Pending</option>
-                                                                <option>Awaiting Payment</option>
-                                                                <option>Payment Received</option>
-                                                                <option>Printing</option>
-                                                                <option>Delivery</option>
-                                                                <option>Delivered</option>
-                                                                <option>Completed</option>
-                                                            </select>
-                                                        </td>
+                                                        <th scope="row">{{ nameP[2] }}</th>
+                                                        <td>{{ emailP[2] }}</td>
+                                                        <td><a href="FileDownloadP3.html">File Download</a></td>
+                                                        <td>{{ quantityP[2] }}</td>
+                                                        <td>{{ progressP[2] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show2">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfo2">
+                                                        <td>Infill: {{ infillP[2] }}</td>
+                                                        <td>Quality: {{ qualityP[2] }}</td>
+                                                        <td>Distance: {{ distanceP[2] }}</td>
+                                                        <td>Materials And Colours: {{ FinalP[2] }}</td>
                                                     </tr>
                                                 {% endif %}
-                                                {% if numb >= 5 %}
+                                                {% if numbP >= 4 %}
                                                     <tr>
-                                                        <th scope="row">{{ name4 }}</th>
-                                                        <td>{{ email4 }}</td>
-                                                        <td>{{ file4 }}</td>
-                                                        <td>{{ quantity4 }}</td>
-                                                        <td>
-                                                            <select class="form-control">
-                                                                <option>Pending</option>
-                                                                <option>Awaiting Payment</option>
-                                                                <option>Payment Received</option>
-                                                                <option>Printing</option>
-                                                                <option>Delivery</option>
-                                                                <option>Delivered</option>
-                                                                <option>Completed</option>
-                                                            </select>
-                                                        </td>
+                                                        <th scope="row">{{ nameP[3] }}</th>
+                                                        <td>{{ emailP[3] }}</td>
+                                                        <td><a href="FileDownloadP4.html">File Download</a></td>
+                                                        <td>{{ quantityP[3] }}</td>
+                                                        <td>{{ progressP[3] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show3">More Info</button></td>
                                                     </tr>
+                                                    <tr id="MoreInfo3">
+                                                        <td>Infill: {{ infillP[3] }}</td>
+                                                        <td>Quality: {{ qualityP[3] }}</td>
+                                                        <td>Distance: {{ distanceP[3] }}</td>
+                                                        <td>Materials And Colours: {{ FinalP[3] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbP >= 5 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameP[4] }}</th>
+                                                        <td>{{ emailP[4] }}</td>
+                                                        <td><a href="FileDownloadP5.html">File Download</a></td>
+                                                        <td>{{ quantityP[4] }}</td>
+                                                        <td>{{ progressP[4] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show4">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfo4">
+                                                        <td>Infill: {{ infillP[4] }}</td>
+                                                        <td>Quality: {{ qualityP[4] }}</td>
+                                                        <td>Distance: {{ distanceP[4] }}</td>
+                                                        <td>Materials And Colours: {{ FinalP[4] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbP == 0 %}
+                                                    No Orders Have Been Ordered
                                                 {% endif %}
                                                 </tbody>
                                             </table>
@@ -218,21 +407,122 @@
                                     </article>
                                 </div>
                             </div>
+
                             <!-- Second Table (Current Orders?) -->
+                    <div class="container">
+                        <div class="row">
                             <div class="col-sm-12">
-                                <br>
                                 <div class="card">
                                     <header class="card-header">
-                                        <h4> Previous Orders </h4>
+                                        <h4> Current Orders </h4>
                                     </header>
                                     <article class="card-body">
-
-
+                                        <div class="container">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">File</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Progress</th>
+                                                    <th scope="col">Other Specs</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% if numbC >= 1 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameC[0] }}</th>
+                                                        <td>{{ emailC[0] }}</td>
+                                                        <td><a href="FileDownloadC1.html">File Download</a></td>
+                                                        <td>{{ quantityC[0] }}</td>
+                                                        <td>{{ progressC[0] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC0">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfoC0">
+                                                        <td>Infill: {{ infillC[0] }}</td>
+                                                        <td>Quality: {{ qualityC[0] }}</td>
+                                                        <td>Distance: {{ distanceC[0] }}</td>
+                                                        <td>Materials And Colours: {{ FinalC[0] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbC >= 2 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameC[1] }}</th>
+                                                        <td>{{ emailC[1] }}</td>
+                                                        <td><a href="FileDownloadC2.html">File Download</a></td>
+                                                        <td>{{ quantityC[1] }}</td>
+                                                        <td>{{ progressC[1] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC1">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfoC1">
+                                                        <td>Infill: {{ infillC[1] }}</td>
+                                                        <td>Quality: {{ qualityC[1] }}</td>
+                                                        <td>Distance: {{ distanceC[1] }}</td>
+                                                        <td>Materials And Colours: {{ FinalC[1] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbC >= 3 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameC[2] }}</th>
+                                                        <td>{{ emailC[2] }}</td>
+                                                        <td><a href="FileDownloadC3.html">File Download</a></td>
+                                                        <td>{{ quantityC[2] }}</td>
+                                                        <td>{{ progressC[2] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC2">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfoC2">
+                                                        <td>Infill: {{ infillC[2] }}</td>
+                                                        <td>Quality: {{ qualityC[2] }}</td>
+                                                        <td>Distance: {{ distanceC[2] }}</td>
+                                                        <td>Materials And Colours: {{ FinalC[2] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbC >= 4 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameC[3] }}</th>
+                                                        <td>{{ emailC[3] }}</td>
+                                                        <td><a href="FileDownloadC4.html">File Download</a></td>
+                                                        <td>{{ quantityC[3] }}</td>
+                                                        <td>{{ progressC[3] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC3">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfoC3">
+                                                        <td>Infill: {{ infillC[3] }}</td>
+                                                        <td>Quality: {{ qualityC[3] }}</td>
+                                                        <td>Distance: {{ distanceC[3] }}</td>
+                                                        <td>Materials And Colours: {{ FinalC[3] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbC >= 5 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameC[4] }}</th>
+                                                        <td>{{ emailC[4] }}</td>
+                                                        <td><a href="FileDownloadC5.html">File Download</a></td>
+                                                        <td>{{ quantityC[4] }}</td>
+                                                        <td>{{ progressC[4] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC4">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfoC4">
+                                                        <td>Infill: {{ infillC[4] }}</td>
+                                                        <td>Quality: {{ qualityC[4] }}</td>
+                                                        <td>Distance: {{ distanceC[4] }}</td>
+                                                        <td>Materials And Colours: {{ FinalC[4] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbC == 0 %}
+                                                    No Orders Have Been Ordered
+                                                {% endif %}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </article>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
                 </div>
             </div>
         </div>

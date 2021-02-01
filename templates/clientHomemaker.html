@@ -1,114 +1,517 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>MakerChain</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <style>
-  .fakeimg {
-    height: 200px;
-    background: #aaa;
-  }
-  </style>
-</head>
-<body>
+    <head>
+      <title>MakerChain</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+      <style>
+        .fakeimg {
+            height: 200px;
+            background: #aaa;
+        }
+      </style>
+      <script type="text/javascript">
+          $(document).ready(function () {
+              let m1 = 1;
+              let m2 = 1;
+              let m3 = 1;
+              let m4 = 1;
+              let m5 = 1;
+              let mC1 = 1;
+              let mC2 = 1;
+              let mC3 = 1;
+              let mC4 = 1;
+              let mC5 = 1;
+              if (document.getElementById("MoreInfo0") != null) {
+                  document.getElementById("MoreInfo0").style.display = "none";
+              }
+              if (document.getElementById("MoreInfo1") != null) {
+                  document.getElementById("MoreInfo1").style.display = "none";
+              }
+              if (document.getElementById("MoreInfo2") != null) {
+                  document.getElementById("MoreInfo2").style.display = "none";
+              }
+              if (document.getElementById("MoreInfo3") != null) {
+                  document.getElementById("MoreInfo3").style.display = "none";
+              }
+              if (document.getElementById("MoreInfo4") != null) {
+                  document.getElementById("MoreInfo4").style.display = "none";
+              }
+              if (document.getElementById("MoreInfo0") != null) {
+                  document.getElementById("Show0").onclick = function () {ShowInfo0()};
+              }
+              if (document.getElementById("MoreInfo1") != null) {
+                  document.getElementById("Show1").onclick = function () {ShowInfo1()};
+              }
+              if (document.getElementById("MoreInfo2") != null) {
+                  document.getElementById("Show2").onclick = function () {ShowInfo2()};
+              }
+              if (document.getElementById("MoreInfo3") != null) {
+                  document.getElementById("Show3").onclick = function () {ShowInfo3()};
+              }
+              if (document.getElementById("MoreInfo4") != null) {
+                  document.getElementById("Show4").onclick = function () {ShowInfo4()};
+              }
+              if (document.getElementById("MoreInfoC1") != null) {
+                  document.getElementById("MoreInfoC1").style.display = "none";
+              }
+              if (document.getElementById("MoreInfoC2") != null) {
+                  document.getElementById("MoreInfoC2").style.display = "none";
+              }
+              if (document.getElementById("MoreInfoC3") != null) {
+                  document.getElementById("MoreInfoC3").style.display = "none";
+              }
+              if (document.getElementById("MoreInfoC4") != null) {
+                  document.getElementById("MoreInfoC4").style.display = "none";
+              }
+              if (document.getElementById("MoreInfoC0") != null) {
+                  document.getElementById("MoreInfoC0").style.display = "none";
+              }
+              if (document.getElementById("MoreInfoC0") != null) {
+                  document.getElementById("ShowC0").onclick = function () {ShowInfoC0()};
+              }
+              if (document.getElementById("MoreInfoC1") != null) {
+                  document.getElementById("ShowC1").onclick = function () {ShowInfoC1()};
+              }
+              if (document.getElementById("MoreInfoC2") != null) {
+                  document.getElementById("ShowC2").onclick = function () {ShowInfoC2()};
+              }
+              if (document.getElementById("MoreInfoC3") != null) {
+                  document.getElementById("ShowC3").onclick = function () {ShowInfoC3()};
+              }
+              if (document.getElementById("MoreInfoC4") != null) {
+                  document.getElementById("ShowC4").onclick = function () {ShowInfoC4()};
+              }
 
-<nav class="navbar navbar-expand-lg bg-info navbar-dark sticky-top">
-  {% if session.get('loggedin') == True %}
-    {% if session.get('maker') == True %}
-        <a class="navbar-brand" href="clientHomemaker.html">
-              <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
-        </a>
-    {% else %}
-      <a class="navbar-brand" href="clientHome.html">
-          <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
-      </a>
-    {% endif %}
-  {% else %}
-    <a class="navbar-brand" href="index.html">
-          <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
-    </a>
-  {% endif %}
-  <button class="navbar-toggler justify-content-start" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
-    <ul class="navbar-nav">
-      <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-        {{ variable }}
-          <img src="{{ pfp }}" style="width: 25px; border-radius:50%; height: 25px">
-      </a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="profilemaker.html">Profile</a>
-        <a class="dropdown-item" href="#">Settings</a>
-          <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="logout.html">Log Out</a>
-      </div>
-    </li>
-    </ul>
-  </div>
-</nav>
-{% if variable5 == True %}
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        Upgraded To Maker!
-    </div>
-{% elif variable4 == True %}
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        <strong>Logged In!</strong> Welcome Back {{ variable }}!
-    </div>
-{% endif %}
+              function ShowInfo0() {
+                  if (m1 === 1) {
+                      console.log("1")
+                      document.getElementById("MoreInfo0").style.display = "table-row";
+                      m1 = 2;
+                      return;
+                  }
+                  if (m1 === 2) {
+                      document.getElementById("MoreInfo0").style.display = "none";
+                      m1 = 1;
+
+                  }
+              }
+
+              function ShowInfo1() {
+                  if (m2 === 1) {
+                      document.getElementById("MoreInfo1").style.display = "table-row";
+                      m2 = 2;
+                      return;
+                  }
+                  if (m2 === 2) {
+                      document.getElementById("MoreInfo1").style.display = "none";
+                      m2 = 1;
+                  }
+              }
+
+              function ShowInfo2() {
+                  if (m3 === 1) {
+                      document.getElementById("MoreInfo2").style.display = "table-row";
+                      m3 = 2;
+                      return;
+                  }
+                  if (m3 === 2) {
+                      document.getElementById("MoreInfo2").style.display = "none";
+                      m3 = 1;
+                  }
+              }
+
+              function ShowInfo3() {
+                  if (m4 === 1) {
+                      document.getElementById("MoreInfo3").style.display = "table-row";
+                      m4 = 2;
+                      return;
+                  }
+                  if (m4 === 2) {
+                      document.getElementById("MoreInfo3").style.display = "none";
+                      m4 = 1;
+                  }
+              }
+
+              function ShowInfo4() {
+                  if (m5 === 1) {
+                      document.getElementById("MoreInfo4").style.display = "table-row";
+                      m5 = 2;
+                      return;
+                  }
+                  if (m5 === 2) {
+                      document.getElementById("MoreInfo4").style.display = "none";
+                      m5 = 1;
+                  }
+              }
 
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-2 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100" id="sidebar">
-            <ul class="nav flex-column flex-nowrap overflow-hidden">
-                <li class="nav-item">
-                    <a class="nav-link text-truncate" href="#"><i class="fa fa-home"></i> <span class="d-none d-sm-inline">Overview</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed text-truncate" href="#submenu1" data-toggle="collapse" data-target="#submenu1"><i class="fa fa-table"></i> <span class="d-none d-sm-inline">Reports</span></a>
-                    <div class="collapse" id="submenu1" aria-expanded="false">
-                        <ul class="flex-column pl-2 nav">
-                            <li class="nav-item"><a class="nav-link py-0" href="#"><span>Orders</span></a></li>
-                            <li class="nav-item">
-                                <a class="nav-link collapsed py-1" href="#submenu1sub1" data-toggle="collapse" data-target="#submenu1sub1"><span>Customers</span></a>
-                                <div class="collapse" id="submenu1sub1" aria-expanded="false">
-                                    <ul class="flex-column nav pl-4">
-                                        <li class="nav-item">
-                                            <a class="nav-link p-1" href="#">
-                                                <i class="fa fa-fw fa-clock-o"></i> Daily </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link p-1" href="#">
-                                                <i class="fa fa-fw fa-dashboard"></i> Dashboard </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link p-1" href="#">
-                                                <i class="fa fa-fw fa-bar-chart"></i> Charts </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link p-1" href="#">
-                                                <i class="fa fa-fw fa-compass"></i> Areas </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>=
-                </li>
-                <li class="nav-item"><a class="nav-link text-truncate" href="#"><i class="fa fa-bar-chart"></i> <span class="d-none d-sm-inline">Analytics</span></a></li>
-                <li class="nav-item"><a class="nav-link text-truncate" href="#"><i class="fa fa-download"></i> <span class="d-none d-sm-inline">Export</span></a></li>
-            </ul>
+              function ShowInfoC0() {
+                  if (mC1 === 1) {
+                      document.getElementById("MoreInfoC0").style.display = "table-row";
+                      mC1 = 2;
+                      return;
+                  }
+                  if (mC1 === 2) {
+                      document.getElementById("MoreInfoC0").style.display = "none";
+                      mC1 = 1;
+
+                  }
+              }
+
+              function ShowInfoC1() {
+                  if (mC2 === 1) {
+                      document.getElementById("MoreInfoC1").style.display = "table-row";
+                      mC2 = 2;
+                      return;
+                  }
+                  if (mC2 === 2) {
+                      document.getElementById("MoreInfoC1").style.display = "none";
+                      mC2 = 1;
+                  }
+              }
+
+              function ShowInfoC2() {
+                  if (mC3 === 1) {
+                      document.getElementById("MoreInfoC2").style.display = "table-row";
+                      mC3 = 2;
+                      return;
+                  }
+                  if (mC3 === 2) {
+                      document.getElementById("MoreInfoC2").style.display = "none";
+                      mC3 = 1;
+                  }
+              }
+
+              function ShowInfoC3() {
+                  if (mC4 === 1) {
+                      document.getElementById("MoreInfoC3").style.display = "table-row";
+                      mC4 = 2;
+                      return;
+                  }
+                  if (mC4 === 2) {
+                      document.getElementById("MoreInfoC3").style.display = "none";
+                      mC4 = 1;
+                  }
+              }
+
+              function ShowInfoC4() {
+                  if (mC5 === 1) {
+                      document.getElementById("MoreInfoC4").style.display = "table-row";
+                      mC5 = 2;
+                      return;
+                  }
+                  if (mC5 === 2) {
+                      document.getElementById("MoreInfoC4").style.display = "none";
+                      mC5 = 1;
+                  }
+              }
+
+          })
+
+      </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg bg-info navbar-dark sticky-top">
+            {% if session.get('loggedin') == True %}
+                {% if session.get('maker') == True %}
+                <a class="navbar-brand" href="clientHomemaker.html">
+                    <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+                </a>
+                {% else %}
+                <a class="navbar-brand" href="clientHome.html">
+                    <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+                </a>
+                {% endif %}
+            {% else %}
+                <a class="navbar-brand" href="index.html">
+                    <img src="/static/dashboard/LogoWhite.png" alt="logo" style="width: 20%">
+                </a>
+            {% endif %}
+            <button class="navbar-toggler justify-content-start" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                            {{ variable }}
+                            <img src="{{ pfp }}" style="width: 25px; border-radius:50%; height: 25px">
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="profile.html">Profile</a>
+                            <a class="dropdown-item" href="#">Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="logout.html">Log Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        {% if variable4 == True %}
+        <div class="alert alert-success alert-dismissible" style="margin-bottom: 0">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>{{ variable2 }}</strong> Welcome {{ variable3 }} {{ variable }}!
         </div>
+        {% endif %}
 
+    <!-- Body Page -->
 
-</body>
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Side Bar -->
+                <div id="sidebar" class="col-2 collapse show d-md-flex bg-light pt-2 pl-0 min-vh-100">
+                    <ul class="nav flex-column flex-nowrap overflow-hidden">
+                        <li class="nav-item">
+                            <a class="nav-link text-truncate" href="order.html">
+                                <i class="fa fa-home"></i>
+                                <span class="d-none d-sm-inline">
+                                    <button type="button" class="btn btn-outline-info">
+                                        <svg style="margin-bottom: 5px" height="1em" viewBox="0 0 16 16" class="bi bi-cart-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                          <path fill-rule="evenodd" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                          <path fill-rule="evenodd" d="M8.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H9v1.5a.5.5 0 0 1-1 0V8H6.5a.5.5 0 0 1 0-1H8V5.5a.5.5 0 0 1 .5-.5z"/>
+                                        </svg>
+                                        New Order
+                                    </button>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Table -->
+                <div class="col pt-2">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <header class="card-header">
+                                        <h4> Previous Orders </h4>
+                                    </header>
+                                    <article class="card-body">
+                                        <div class="container">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">File</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Progress</th>
+                                                    <th scope="col">Other Specs</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% if numbP >= 1 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameP[0] }}</th>
+                                                        <td>{{ emailP[0] }}</td>
+                                                        <td><a href="FileDownloadP1.html">File Download</a></td>
+                                                        <td>{{ quantityP[0] }}</td>
+                                                        <td>{{ progressP[0] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show0">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfo0">
+                                                        <td>Infill: {{ infillP[0] }}</td>
+                                                        <td>Quality: {{ qualityP[0] }}</td>
+                                                        <td>Distance: {{ distanceP[0] }}</td>
+                                                        <td>Materials And Colours: {{ FinalP[0] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbP >= 2 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameP[1] }}</th>
+                                                        <td>{{ emailP[1] }}</td>
+                                                        <td><a href="FileDownloadP2.html">File Download</a></td>
+                                                        <td>{{ quantityP[1] }}</td>
+                                                        <td>{{ progressP[1] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show1">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfo1">
+                                                        <td>Infill: {{ infillP[1] }}</td>
+                                                        <td>Quality: {{ qualityP[1] }}</td>
+                                                        <td>Distance: {{ distanceP[1] }}</td>
+                                                        <td>Materials And Colours: {{ FinalP[1] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbP >= 3 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameP[2] }}</th>
+                                                        <td>{{ emailP[2] }}</td>
+                                                        <td><a href="FileDownloadP3.html">File Download</a></td>
+                                                        <td>{{ quantityP[2] }}</td>
+                                                        <td>{{ progressP[2] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show2">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfo2">
+                                                        <td>Infill: {{ infillP[2] }}</td>
+                                                        <td>Quality: {{ qualityP[2] }}</td>
+                                                        <td>Distance: {{ distanceP[2] }}</td>
+                                                        <td>Materials And Colours: {{ FinalP[2] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbP >= 4 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameP[3] }}</th>
+                                                        <td>{{ emailP[3] }}</td>
+                                                        <td><a href="FileDownloadP4.html">File Download</a></td>
+                                                        <td>{{ quantityP[3] }}</td>
+                                                        <td>{{ progressP[3] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show3">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfo3">
+                                                        <td>Infill: {{ infillP[3] }}</td>
+                                                        <td>Quality: {{ qualityP[3] }}</td>
+                                                        <td>Distance: {{ distanceP[3] }}</td>
+                                                        <td>Materials And Colours: {{ FinalP[3] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbP >= 5 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameP[4] }}</th>
+                                                        <td>{{ emailP[4] }}</td>
+                                                        <td><a href="FileDownloadP5.html">File Download</a></td>
+                                                        <td>{{ quantityP[4] }}</td>
+                                                        <td>{{ progressP[4] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show4">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfo4">
+                                                        <td>Infill: {{ infillP[4] }}</td>
+                                                        <td>Quality: {{ qualityP[4] }}</td>
+                                                        <td>Distance: {{ distanceP[4] }}</td>
+                                                        <td>Materials And Colours: {{ FinalP[4] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbP == 0 %}
+                                                    No Orders Have Been Ordered
+                                                {% endif %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+
+                            <!-- Second Table (Current Orders?) -->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <header class="card-header">
+                                        <h4> Current Orders </h4>
+                                    </header>
+                                    <article class="card-body">
+                                        <div class="container">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Email</th>
+                                                    <th scope="col">File</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Progress</th>
+                                                    <th scope="col">Other Specs</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% if numbC >= 1 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameC[0] }}</th>
+                                                        <td>{{ emailC[0] }}</td>
+                                                        <td><a href="FileDownloadC1.html">File Download</a></td>
+                                                        <td>{{ quantityC[0] }}</td>
+                                                        <td>{{ progressC[0] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC0">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfoC0">
+                                                        <td>Infill: {{ infillC[0] }}</td>
+                                                        <td>Quality: {{ qualityC[0] }}</td>
+                                                        <td>Distance: {{ distanceC[0] }}</td>
+                                                        <td>Materials And Colours: {{ FinalC[0] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbC >= 2 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameC[1] }}</th>
+                                                        <td>{{ emailC[1] }}</td>
+                                                        <td><a href="FileDownloadC2.html">File Download</a></td>
+                                                        <td>{{ quantityC[1] }}</td>
+                                                        <td>{{ progressC[1] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC1">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfoC1">
+                                                        <td>Infill: {{ infillC[1] }}</td>
+                                                        <td>Quality: {{ qualityC[1] }}</td>
+                                                        <td>Distance: {{ distanceC[1] }}</td>
+                                                        <td>Materials And Colours: {{ FinalC[1] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbC >= 3 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameC[2] }}</th>
+                                                        <td>{{ emailC[2] }}</td>
+                                                        <td><a href="FileDownloadC3.html">File Download</a></td>
+                                                        <td>{{ quantityC[2] }}</td>
+                                                        <td>{{ progressC[2] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC2">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfoC2">
+                                                        <td>Infill: {{ infillC[2] }}</td>
+                                                        <td>Quality: {{ qualityC[2] }}</td>
+                                                        <td>Distance: {{ distanceC[2] }}</td>
+                                                        <td>Materials And Colours: {{ FinalC[2] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbC >= 4 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameC[3] }}</th>
+                                                        <td>{{ emailC[3] }}</td>
+                                                        <td><a href="FileDownloadC4.html">File Download</a></td>
+                                                        <td>{{ quantityC[3] }}</td>
+                                                        <td>{{ progressC[3] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC3">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfoC3">
+                                                        <td>Infill: {{ infillC[3] }}</td>
+                                                        <td>Quality: {{ qualityC[3] }}</td>
+                                                        <td>Distance: {{ distanceC[3] }}</td>
+                                                        <td>Materials And Colours: {{ FinalC[3] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbC >= 5 %}
+                                                    <tr>
+                                                        <th scope="row">{{ nameC[4] }}</th>
+                                                        <td>{{ emailC[4] }}</td>
+                                                        <td><a href="FileDownloadC5.html">File Download</a></td>
+                                                        <td>{{ quantityC[4] }}</td>
+                                                        <td>{{ progressC[4] }}</td>
+                                                        <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC4">More Info</button></td>
+                                                    </tr>
+                                                    <tr id="MoreInfoC4">
+                                                        <td>Infill: {{ infillC[4] }}</td>
+                                                        <td>Quality: {{ qualityC[4] }}</td>
+                                                        <td>Distance: {{ distanceC[4] }}</td>
+                                                        <td>Materials And Colours: {{ FinalC[4] }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if numbC == 0 %}
+                                                    No Orders Have Been Ordered
+                                                {% endif %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

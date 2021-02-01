@@ -1,7 +1,6 @@
 # App.py Flask MakerChain Website
 
 # Imports
-
 from flask import Flask, render_template, request, session, redirect, url_for, send_file
 import hashlib  # hashing passwords
 import pymysql as mysql  # mysql connection
@@ -248,46 +247,31 @@ def home():
 def login():
     if request.method == "POST":
         email = request.form.get('email')
+        email = email.lower()
         password = request.form.get('password')
         temp = "SELECT Email, Password1, Name, id FROM sys1.CUser WHERE Email = %s"  # Credential verification
         temp1 = email
         temp3 = cursor.execute(temp, temp1)
         conn.commit()
-        temp4 = (list(cursor))
-        temp4 = str(temp4)
-        if email in temp4:
-            if hashlib.sha256(password.encode()).hexdigest() in temp4:  # Formatting and checking hashed password
-                test = temp4.replace(email, "")
-                temp5 = test.replace(hashlib.sha256(password.encode()).hexdigest(), "")
-                temp6 = temp5.replace("[('', '', '", "")
-                temp7 = temp6.replace("', ", "")
-                numbers = re.findall(r'\d+', temp7)
-                numbers = str(numbers)
-                numbers1 = numbers.replace("['", "")
-                numbers2 = numbers1.replace("']", "")
-                tamp = temp7.replace(numbers2, "")
-                name = tamp.replace(")]", "")
-                temp8 = temp5.replace(name, "")
-                temp9 = temp8.replace("[('', '', '', ", "")
-                id = temp9.replace(")]", "")
+        temp4 = list(cursor)
+        if email == temp4[0][0]:
+            if hashlib.sha256(password.encode()).hexdigest() == temp4[0][1]:  # Formatting and checking hashed password
+                name = temp4[0][2]
+                id = temp4[0][3]
                 temp = "SELECT Address FROM sys1.CUser WHERE id = %s"  # getting session information to allow transfer of information
                 temp2 = id
                 temp3 = cursor.execute(temp, temp2)
                 conn.commit()
                 temp4 = list(cursor)
-                Address = str(temp4)
-                temp1 = Address.replace("[('", "")
-                Address = temp1.replace("',)]", "")
+                Address = temp4[0][0]
                 temp = "SELECT City FROM sys1.CUser WHERE id = %s"
                 temp2 = id
                 temp3 = cursor.execute(temp, temp2)
                 conn.commit()
                 temp4 = list(cursor)
-                City = str(temp4)
-                temp1 = City.replace("[('", "")
-                City = temp1.replace("',)]", "")
+                City = temp4[0][0]
                 session['loggedin'] = True
-                session['id'] = id
+                session['id'] = str(id)
                 session['name'] = name
                 session['email'] = email
                 session['address'] = Address
@@ -295,16 +279,16 @@ def login():
                 temp = "SELECT pfp FROM sys1.CUser WHERE id = %s"
                 temp3 = cursor.execute(temp, session['id'])
                 result = cursor.fetchone()
-                if result[0] is None:
+                if result[0] == None:
                     pfp = os.path.join("/static/dashboard/", "picture.jpg")  # if pfp isn't uploaded use default
                     session['pfp'] = pfp
                 else:
                     file_extention1 = ''
-                    if 'PNG' in str(result[0]):
+                    if 'PNG' in str(result[0][0]):
                         file_extention1 = '.png'
-                    elif 'JPG' in str(result[0]):
+                    elif 'JPG' in str(result[0][0]):
                         file_extention1 = '.jpg'
-                    elif 'JPEG' in str(result[0]):
+                    elif 'JPEG' in str(result[0][0]):
                         file_extention1 = '.jpeg'
                     else:
                         file_extention1 = '.png'
@@ -326,12 +310,12 @@ def login():
                     query2 = id
                     cursor.execute(query, query2)
                     result2 = list(cursor)
+                    print(result2)
                     if result2[0] != ('1',):
                         return redirect(url_for('ver'))  # send verification email
                     else:
                         session['Verified'] = True
-                        return render_template('clientHome.html', variable=name, variable2="Logged In",
-                                               variable3="Back", variable4=True, pfp=session['pfp'])
+                        return redirect(url_for("Chome"))
                 else:
                     session['maker'] = True  # if the account is a maker
                     select = "SELECT Material, Colour, LongLat, Range1, Printer, Printer2, Printer3, Printer4, Size,\
@@ -362,8 +346,7 @@ def login():
                         return redirect(url_for('ver'))  # send verification email
                     else:
                         session['Verified'] = True
-                        return render_template('clientHomemaker.html', variable=name, variable4=True,
-                                               pfp=session['pfp'])
+                        return redirect(url_for("Mhome"))
             else:
                 return render_template('login.html', Incorrect=1)
         else:
@@ -498,31 +481,890 @@ def DelOrder():
         return render_template("clientHome.html")
 
 
-@app.route('/clientHomemaker.html')  # Home page for client
+@app.route('/clientHomemaker.html')  # Home page for maker
 def Mhome():
-    if session.get('loggedin') != True:  # If not logged in go to index, so can't see this page without login
-        return render_template("index.html")
-    else:
-        if session['Verified'] == True:
-            return render_template("clientHomemaker.html", variable=session['name'], variable2="Signed Up",
-                                   pfp=session['pfp'])
+    #Orders
+    def Nmaxelements(list1, N):
+        final_list = []
+
+        for i in range(0, N):
+            max1 = 0
+
+            for j in range(len(list1)):
+                if list1[j] > max1:
+                    max1 = list1[j];
+
+            list1.remove(max1);
+            final_list.append(max1)
+
+        return final_list
+        # Orders
+
+    def Current():
+        final_listC = []
+        query3 = "SELECT OrderNum FROM sys1.Orders WHERE Cid = %s AND PROGRESS != %s"
+        query4 = (session['id'], "FINISHED")
+        cursor.execute(query3, query4)
+        result3 = list(cursor)
+        print(result3)
+        resultC = []
+        for x in result3:
+            resultC.append(x[0])
+        if len(resultC) == 1:
+            final_listC = Nmaxelements(resultC, 1)
+        elif len(resultC) == 2:
+            final_listC = Nmaxelements(resultC, 2)
+        elif len(resultC) == 3:
+            final_listC = Nmaxelements(resultC, 3)
+        elif len(resultC) == 4:
+            final_listC = Nmaxelements(resultC, 4)
+        elif len(resultC) >= 5:
+            final_listC = Nmaxelements(resultC, 5)
         else:
-            return render_template("clientHomemaker.html", variable=session['name'], variable2=False,
-                                   pfp=session['pfp'])
+            return [], 0, 0, 0, 0, 0, 0, 0, 0, 0
+        resultC = final_listC
 
+        result_listC = []
+        for i in range(0, len(final_listC)):
+            result_list1C = []
+            query = "SELECT OrderNum, Mid, PROGRESS, Quantity, File, Colours, Material, Infill, Quality, Distance FROM sys1.Orders WHERE OrderNum = %s"
+            cursor.execute(query, final_listC[i])
+            result1C = list(cursor)
+            if result1C[0][1] == None:
+                continue
+            query2 = "SELECT Name, Email FROM sys1.CUser WHERE id = %s"
+            cursor.execute(query2, result1C[0][1])
+            result2C = list(cursor)
+            for x in range(0, len(result1C[0])):
+                result_list1C.insert(x, result1C[0][x])
+            result_list1C.insert(10, result2C[0][0])
+            result_list1C.insert(11, result2C[0][1])
+            result_listC.append(result_list1C)
+        nameC = []
+        for x in range(0, len(result_listC)):
+            nameC.append(result_listC[x][10])
+        emailC = []
+        for x in range(0, len(result_listC)):
+            emailC.append(result_listC[x][11])
+        # file = []
+        # for x in range(0, len(result_list)):      FILEDOWNLOAD.HTML --- WITH THIS STUFF IN IT
+        #     file.append(result_list[x][10])
+        quantityC = []
+        for x in range(0, len(result_listC)):
+            quantityC.append(result_listC[x][3])
+        progressC = []
+        for x in range(0, len(result_listC)):
+            progressC.append(result_listC[x][2])
+        infillC = []
+        for x in range(0, len(result_listC)):
+            infillC.append(result_listC[x][7])
+        qualityC = []
+        for x in range(0, len(result_listC)):
+            qualityC.append(result_listC[x][8])
+        distanceC = []
+        for x in range(0, len(result_listC)):
+            distanceC.append(result_listC[x][9])
+        y = 1
+        finalC = str()
+        FinalC = []
+        for x in range(0, len(result_listC)):
+            material = result_listC[x][6]
+            material = material.title()
+            materialsep = material.split(", ")
+            colour = result_listC[x][5]
+            colour = colour.title()
+            coloursep = colour.split(", ")
+            for i in range(0, len(coloursep)):
+                if y == 1:
+                    colourb = "(" + coloursep[i] + ")"
+                    colourb = colourb.replace(" ", "")
+                    finalC = materialsep[i] + colourb
+                    y += 1
+                else:
+                    colourb = "(" + coloursep[i] + ")"
+                    colourb = colourb.replace(" ", "")
+                    finalC = finalC + ", " + materialsep[i] + colourb
+            FinalC.append(finalC)
 
-@app.route('/clientHome.html')  # Same as above for customer
-def Chome():
+        if len(resultC) == 1:
+            session['OrderNumC1'] = result_listC[0][0]
+        if len(resultC) == 2:
+            session['OrderNumC1'] = result_listC[0][0]
+            session['OrderNumC2'] = result_listC[1][0]
+        if len(resultC) == 3:
+            session['OrderNumC1'] = result_listC[0][0]
+            session['OrderNumC2'] = result_listC[1][0]
+            session['OrderNumC3'] = result_listC[2][0]
+        if len(resultC) == 4:
+            session['OrderNumC1'] = result_listC[0][0]
+            session['OrderNumC2'] = result_listC[1][0]
+            session['OrderNumC3'] = result_listC[2][0]
+            session['OrderNumC4'] = result_listC[3][0]
+        if len(resultC) >= 5:
+            session['OrderNumC1'] = result_listC[0][0]
+            session['OrderNumC2'] = result_listC[1][0]
+            session['OrderNumC3'] = result_listC[2][0]
+            session['OrderNumC4'] = result_listC[3][0]
+            session['OrderNumC5'] = result_listC[4][0]
+
+        print(resultC, nameC, emailC, quantityC, progressC, infillC, qualityC, distanceC, FinalC)
+
+        return resultC, nameC, emailC, quantityC, progressC, infillC, qualityC, distanceC, FinalC
+
+    def Previous():
+        final_listP = []
+        query3 = "SELECT OrderNum FROM sys1.Orders WHERE Mid = %s AND PROGRESS = %s"
+        query4 = (session['id'], "FINISHED")
+        cursor.execute(query3, query4)
+        result3 = list(cursor)
+        resultP = []
+        for x in result3:
+            resultP.append(x[0])
+        if len(resultP) == 1:
+            final_listP = Nmaxelements(resultP, 1)
+        elif len(resultP) == 2:
+            final_listP = Nmaxelements(resultP, 2)
+        elif len(resultP) == 3:
+            final_listP = Nmaxelements(resultP, 3)
+        elif len(resultP) == 4:
+            final_listP = Nmaxelements(resultP, 4)
+        elif len(resultP) >= 5:
+            final_listP = Nmaxelements(resultP, 5)
+        else:
+            return [], 0, 0, 0, 0, 0, 0, 0, 0
+        resultP = final_listP
+
+        result_listP = []
+        for i in range(0, len(final_listP)):
+            result_list1P = []
+            query = "SELECT OrderNum, Cid, PROGRESS, Quantity, File, Colours, Material, Infill, Quality, Distance FROM sys1.Orders WHERE OrderNum = %s"
+            cursor.execute(query, final_listP[i])
+            result1P = list(cursor)
+            if result1P[0][1] == None:
+                continue
+            query2 = "SELECT Name, Email FROM sys1.CUser WHERE id = %s"
+            cursor.execute(query2, result1P[0][1])
+            result2P = list(cursor)
+            for x in range(0, len(result1P[0])):
+                result_list1P.insert(x, result1P[0][x])
+            result_list1P.insert(10, result2P[0][0])
+            result_list1P.insert(11, result2P[0][1])
+            result_listP.append(result_list1P)
+
+        nameP = []
+        for x in range(0, len(result_listP)):
+            nameP.append(result_listP[x][10])
+        emailP = []
+        for x in range(0, len(result_listP)):
+            emailP.append(result_listP[x][11])
+        # file = []
+        # for x in range(0, len(result_list)):      FILEDOWNLOAD.HTML --- WITH THIS STUFF IN IT
+        #     file.append(result_list[x][10])
+        # print(file)
+        quantityP = []
+        for x in range(0, len(result_listP)):
+            quantityP.append(result_listP[x][3])
+        progressP = []
+        for x in range(0, len(result_listP)):
+            progressP.append(result_listP[x][2])
+        infillP = []
+        for x in range(0, len(result_listP)):
+            infillP.append(result_listP[x][7])
+        qualityP = []
+        for x in range(0, len(result_listP)):
+            qualityP.append(result_listP[x][8])
+        distanceP = []
+        for x in range(0, len(result_listP)):
+            distanceP.append(result_listP[x][9])
+        y = 1
+        finalP = str()
+        FinalP = []
+        for x in range(0, len(result_listP)):
+            material = result_listP[x][6]
+            material = material.title()
+            materialsep = material.split(", ")
+            colour = result_listP[x][5]
+            colour = colour.title()
+            coloursep = colour.split(", ")
+            for i in range(0, len(coloursep)):
+                if y == 1:
+                    colourb = "(" + coloursep[i] + ")"
+                    colourb = colourb.replace(" ", "")
+                    finalP = materialsep[i] + colourb
+                    y = 2
+                else:
+                    colourb = "(" + coloursep[i] + ")"
+                    colourb = colourb.replace(" ", "")
+                    finalP = finalP + ", " + materialsep[i] + colourb
+            FinalP.append(finalP)
+
+        if len(resultP) == 1:
+            session['OrderNumP1'] = result_listP[0][0]
+        if len(resultP) == 2:
+            session['OrderNumP1'] = result_listP[0][0]
+            session['OrderNumP2'] = result_listP[1][0]
+        if len(resultP) == 3:
+            session['OrderNumP1'] = result_listP[0][0]
+            session['OrderNumP2'] = result_listP[1][0]
+            session['OrderNumP3'] = result_listP[2][0]
+        if len(resultP) == 4:
+            session['OrderNumP1'] = result_listP[0][0]
+            session['OrderNumP2'] = result_listP[1][0]
+            session['OrderNumP3'] = result_listP[2][0]
+            session['OrderNumP4'] = result_listP[3][0]
+        if len(resultP) >= 5:
+            session['OrderNumP1'] = result_listP[0][0]
+            session['OrderNumP2'] = result_listP[1][0]
+            session['OrderNumP3'] = result_listP[2][0]
+            session['OrderNumP4'] = result_listP[3][0]
+            session['OrderNumP5'] = result_listP[4][0]
+
+        print(resultP, nameP, emailP, quantityP, progressP, infillP, qualityP, distanceP, FinalP)
+
+        return resultP, nameP, emailP, quantityP, progressP, infillP, qualityP, distanceP, FinalP
+
+    resultP, nameP, emailP, quantityP, progressP, infillP, qualityP, distanceP, FinalP = Previous()
+    resultC, nameC, emailC, quantityC, progressC, infillC, qualityC, distanceC, FinalC = Current()
+
+    P = 0
+    C = 0
     if session.get('loggedin') != True:
         return render_template("index.html")
     else:
         session['log'] = True
         items = []
         if session['Verified'] == True:
-            return render_template("clientHome.html", variable=session['name'], variable2="Signed Up",
-                                   pfp=session['pfp'], numb=3)
+            if len(resultP) == 1:
+                P = 1
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 2:
+                P = 2
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 3:
+                P = 3
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 4:
+                P = 4
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) >= 5:
+                P = 5
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            else:
+                P = 0
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            return render_template("clientHomemaker.html", variable=session['name'], variable2="Signed Up",
+                                   pfp=session['pfp'], numbP=P, nameP=nameP, emailP=emailP,
+                                   quantityP=quantityP,
+                                   progressP=progressP, infillP=infillP, qualityP=qualityP,
+                                   distanceP=distanceP,
+                                   FinalP=FinalP, numbC=C, nameC=nameC,
+                                   emailC=emailC, quantityC=quantityC, progressC=progressC, infillC=infillC,
+                                   qualityC=qualityC, distanceC=distanceC, FinalC=FinalC)
         else:
-            return render_template("clientHome.html", variable=session['name'], variable2=False, pfp=session['pfp'])
+            if len(resultP) == 1:
+                P = 1
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 2:
+                P = 2
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 3:
+                P = 3
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 4:
+                P = 4
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) >= 5:
+                P = 5
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            else:
+                P = 0
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            return render_template("clientHomemaker.html", variable=session['name'], variable2=False, pfp=session['pfp'],
+                                   numbP=P, nameP=nameP, emailP=emailP,
+                                   quantityP=quantityP,
+                                   progressP=progressP, infillP=infillP, qualityP=qualityP,
+                                   distanceP=distanceP,
+                                   FinalP=FinalP, numbC=C, nameC=nameC,
+                                   emailC=emailC, quantityC=quantityC, progressC=progressC, infillC=infillC,
+                                   qualityC=qualityC, distanceC=distanceC, FinalC=FinalC)
+
+
+@app.route('/clientHome.html')  # Same as above for customer
+def Chome():
+
+    def Nmaxelements(list1, N):
+        final_list = []
+
+        for i in range(0, N):
+            max1 = 0
+
+            for j in range(len(list1)):
+                if list1[j] > max1:
+                    max1 = list1[j];
+
+            list1.remove(max1);
+            final_list.append(max1)
+
+        return final_list
+        # Orders
+
+    def Current():
+        final_listC = []
+        query3 = "SELECT OrderNum FROM sys1.Orders WHERE Cid = %s AND PROGRESS != %s"
+        query4 = (session['id'], "FINISHED")
+        cursor.execute(query3, query4)
+        result3 = list(cursor)
+        print(result3)
+        resultC = []
+        for x in result3:
+            resultC.append(x[0])
+        if len(resultC) == 1:
+            final_listC = Nmaxelements(resultC, 1)
+        elif len(resultC) == 2:
+            final_listC = Nmaxelements(resultC, 2)
+        elif len(resultC) == 3:
+            final_listC = Nmaxelements(resultC, 3)
+        elif len(resultC) == 4:
+            final_listC = Nmaxelements(resultC, 4)
+        elif len(resultC) >= 5:
+            final_listC = Nmaxelements(resultC, 5)
+        else:
+            return [], 0, 0, 0, 0, 0, 0, 0, 0
+        resultC = final_listC
+
+        result_listC = []
+        for i in range(0, len(final_listC)):
+            result_list1C = []
+            query = "SELECT OrderNum, Mid, PROGRESS, Quantity, File, Colours, Material, Infill, Quality, Distance FROM sys1.Orders WHERE OrderNum = %s"
+            cursor.execute(query, final_listC[i])
+            result1C = list(cursor)
+            if result1C[0][1] == None:
+                continue
+            query2 = "SELECT Name, Email FROM sys1.CUser WHERE id = %s"
+            cursor.execute(query2, result1C[0][1])
+            result2C = list(cursor)
+            for x in range(0, len(result1C[0])):
+                result_list1C.insert(x, result1C[0][x])
+            result_list1C.insert(10, result2C[0][0])
+            result_list1C.insert(11, result2C[0][1])
+            result_listC.append(result_list1C)
+        nameC = []
+        for x in range(0, len(result_listC)):
+            nameC.append(result_listC[x][10])
+        emailC = []
+        for x in range(0, len(result_listC)):
+            emailC.append(result_listC[x][11])
+        # file = []
+        # for x in range(0, len(result_list)):      FILEDOWNLOAD.HTML --- WITH THIS STUFF IN IT
+        #     file.append(result_list[x][10])
+        quantityC = []
+        for x in range(0, len(result_listC)):
+            quantityC.append(result_listC[x][3])
+        progressC = []
+        for x in range(0, len(result_listC)):
+            progressC.append(result_listC[x][2])
+        infillC = []
+        for x in range(0, len(result_listC)):
+            infillC.append(result_listC[x][7])
+        qualityC = []
+        for x in range(0, len(result_listC)):
+            qualityC.append(result_listC[x][8])
+        distanceC = []
+        for x in range(0, len(result_listC)):
+            distanceC.append(result_listC[x][9])
+        y = 1
+        finalC = str()
+        FinalC = []
+        for x in range(0, len(result_listC)):
+            material = result_listC[x][6]
+            material = material.title()
+            materialsep = material.split(", ")
+            colour = result_listC[x][5]
+            colour = colour.title()
+            coloursep = colour.split(", ")
+            for i in range(0, len(coloursep)):
+                if y == 1:
+                    colourb = "(" + coloursep[i] + ")"
+                    colourb = colourb.replace(" ", "")
+                    finalC = materialsep[i] + colourb
+                    y += 1
+                else:
+                    colourb = "(" + coloursep[i] + ")"
+                    colourb = colourb.replace(" ", "")
+                    finalC = finalC + ", " + materialsep[i] + colourb
+            FinalC.append(finalC)
+
+
+        if len(resultC) == 1:
+            session['OrderNumC1'] = result_listC[0][0]
+        if len(resultC) == 2:
+            session['OrderNumC1'] = result_listC[0][0]
+            session['OrderNumC2'] = result_listC[1][0]
+        if len(resultC) == 3:
+            session['OrderNumC1'] = result_listC[0][0]
+            session['OrderNumC2'] = result_listC[1][0]
+            session['OrderNumC3'] = result_listC[2][0]
+        if len(resultC) == 4:
+            session['OrderNumC1'] = result_listC[0][0]
+            session['OrderNumC2'] = result_listC[1][0]
+            session['OrderNumC3'] = result_listC[2][0]
+            session['OrderNumC4'] = result_listC[3][0]
+        if len(resultC) >= 5:
+            session['OrderNumC1'] = result_listC[0][0]
+            session['OrderNumC2'] = result_listC[1][0]
+            session['OrderNumC3'] = result_listC[2][0]
+            session['OrderNumC4'] = result_listC[3][0]
+            session['OrderNumC5'] = result_listC[4][0]
+
+        print(resultC, nameC, emailC, quantityC, progressC, infillC, qualityC, distanceC, FinalC)
+
+        return resultC, nameC, emailC, quantityC, progressC, infillC, qualityC, distanceC, FinalC
+
+
+
+    def Previous():
+        final_listP = []
+        query3 = "SELECT OrderNum FROM sys1.Orders WHERE Cid = %s AND PROGRESS = %s"
+        query4 = (session['id'], "FINISHED")
+        cursor.execute(query3, query4)
+        result3 = list(cursor)
+        print(result3)
+        resultP = []
+        for x in result3:
+            resultP.append(x[0])
+        if len(resultP) == 1:
+            final_listP = Nmaxelements(resultP, 1)
+        elif len(resultP) == 2:
+            final_listP = Nmaxelements(resultP, 2)
+        elif len(resultP) == 3:
+            final_listP = Nmaxelements(resultP, 3)
+        elif len(resultP) == 4:
+            final_listP = Nmaxelements(resultP, 4)
+        elif len(resultP) >= 5:
+            final_listP = Nmaxelements(resultP, 5)
+        else:
+            return [], 0, 0, 0, 0, 0, 0, 0, 0, 0
+        resultP = final_listP
+
+        result_listP = []
+        for i in range(0, len(final_listP)):
+            result_list1P = []
+            query = "SELECT OrderNum, Mid, PROGRESS, Quantity, File, Colours, Material, Infill, Quality, Distance FROM sys1.Orders WHERE OrderNum = %s"
+            cursor.execute(query, final_listP[i])
+            result1P = list(cursor)
+            if result1P[0][1] == None:
+                continue
+            query2 = "SELECT Name, Email FROM sys1.CUser WHERE id = %s"
+            cursor.execute(query2, result1P[0][1])
+            result2P = list(cursor)
+            for x in range(0, len(result1P[0])):
+                result_list1P.insert(x, result1P[0][x])
+            result_list1P.insert(10, result2P[0][0])
+            result_list1P.insert(11, result2P[0][1])
+            result_listP.append(result_list1P)
+
+        nameP = []
+        for x in range(0, len(result_listP)):
+            nameP.append(result_listP[x][10])
+        emailP = []
+        for x in range(0, len(result_listP)):
+            emailP.append(result_listP[x][11])
+        # file = []
+        # for x in range(0, len(result_list)):      FILEDOWNLOAD.HTML --- WITH THIS STUFF IN IT
+        #     file.append(result_list[x][10])
+        # print(file)
+        quantityP = []
+        for x in range(0, len(result_listP)):
+            quantityP.append(result_listP[x][3])
+        progressP = []
+        for x in range(0, len(result_listP)):
+            progressP.append(result_listP[x][2])
+        infillP = []
+        for x in range(0, len(result_listP)):
+            infillP.append(result_listP[x][7])
+        qualityP = []
+        for x in range(0, len(result_listP)):
+            qualityP.append(result_listP[x][8])
+        distanceP = []
+        for x in range(0, len(result_listP)):
+            distanceP.append(result_listP[x][9])
+        y = 1
+        finalP = str()
+        FinalP = []
+        for x in range(0, len(result_listP)):
+            material = result_listP[x][6]
+            material = material.title()
+            materialsep = material.split(", ")
+            colour = result_listP[x][5]
+            colour = colour.title()
+            coloursep = colour.split(", ")
+            for i in range(0, len(coloursep)):
+                if y == 1:
+                    colourb = "(" + coloursep[i] + ")"
+                    colourb = colourb.replace(" ", "")
+                    finalP = materialsep[i] + colourb
+                    y = 2
+                else:
+                    colourb = "(" + coloursep[i] + ")"
+                    colourb = colourb.replace(" ", "")
+                    finalP = finalP + ", " + materialsep[i] + colourb
+            FinalP.append(finalP)
+
+
+        if len(resultP) == 1:
+            session['OrderNumP1'] = result_listP[0][0]
+        if len(resultP) == 2:
+            session['OrderNumP1'] = result_listP[0][0]
+            session['OrderNumP2'] = result_listP[1][0]
+        if len(resultP) == 3:
+            session['OrderNumP1'] = result_listP[0][0]
+            session['OrderNumP2'] = result_listP[1][0]
+            session['OrderNumP3'] = result_listP[2][0]
+        if len(resultP) == 4:
+            session['OrderNumP1'] = result_listP[0][0]
+            session['OrderNumP2'] = result_listP[1][0]
+            session['OrderNumP3'] = result_listP[2][0]
+            session['OrderNumP4'] = result_listP[3][0]
+        if len(resultP) >= 5:
+            session['OrderNumP1'] = result_listP[0][0]
+            session['OrderNumP2'] = result_listP[1][0]
+            session['OrderNumP3'] = result_listP[2][0]
+            session['OrderNumP4'] = result_listP[3][0]
+            session['OrderNumP5'] = result_listP[4][0]
+
+        print(resultP, nameP, emailP, quantityP, progressP, infillP, qualityP, distanceP, FinalP)
+
+        return resultP, nameP, emailP, quantityP, progressP, infillP, qualityP, distanceP, FinalP
+
+
+    resultP, nameP, emailP, quantityP, progressP, infillP, qualityP, distanceP, FinalP = Previous()
+    resultC, nameC, emailC, quantityC, progressC, infillC, qualityC, distanceC, FinalC = Current()
+
+    P = 0
+    C = 0
+    if session.get('loggedin') != True:
+        return render_template("index.html")
+    else:
+        session['log'] = True
+        items = []
+        if session['Verified'] == True:
+            if len(resultP) == 1:
+                P = 1
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 2:
+                P = 2
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 3:
+                P = 3
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 4:
+                P = 4
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) >= 5:
+                P = 5
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            else:
+                P = 0
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            return render_template("clientHome.html", variable=session['name'], variable2="Signed Up",
+                                   pfp=session['pfp'], numbP=P, nameP=nameP, emailP=emailP,
+                                   quantityP=quantityP,
+                                   progressP=progressP, infillP=infillP, qualityP=qualityP,
+                                   distanceP=distanceP,
+                                   FinalP=FinalP, numbC=C, nameC=nameC,
+                                   emailC=emailC, quantityC=quantityC, progressC=progressC, infillC=infillC,
+                                   qualityC=qualityC, distanceC=distanceC, FinalC=FinalC)
+        else:
+            if len(resultP) == 1:
+                P = 1
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 2:
+                P = 2
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 3:
+                P = 3
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) == 4:
+                P = 4
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            elif len(resultP) >= 5:
+                P = 5
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            else:
+                P = 0
+                if len(resultC) == 1:
+                    C = 1
+                elif len(resultC) == 2:
+                    C = 2
+                elif len(resultC) == 3:
+                    C = 3
+                elif len(resultC) == 4:
+                    C = 4
+                elif len(resultC) >= 5:
+                    C = 5
+                else:
+                    C = 0
+            return render_template("clientHome.html", variable=session['name'], variable2=False, pfp=session['pfp'],
+                                   numbP=P, nameP=nameP, emailP=emailP,
+                                   quantityP=quantityP,
+                                   progressP=progressP, infillP=infillP, qualityP=qualityP,
+                                   distanceP=distanceP,
+                                   FinalP=FinalP, numbC=C, nameC=nameC,
+                                   emailC=emailC, quantityC=quantityC, progressC=progressC, infillC=infillC,
+                                   qualityC=qualityC, distanceC=distanceC, FinalC=FinalC)
 
 
 @app.route('/signup.html', methods=["GET", "POST"])
@@ -531,6 +1373,7 @@ def signup():
         fname = request.form.get('fname')  # access the data inside
         lname = request.form.get('lname')
         email = request.form.get('email')
+        email = email.lower()
         address = request.form.get('address')
         city = request.form.get('city')
         password = request.form.get('pass')
@@ -1742,6 +2585,165 @@ def FileDownload():
         file.close()  # get from db
 
     return send_file("static/UploadedFiles/File" + str(session['OrderNum']) + "O" + ".stl", as_attachment=True)  # Auto Download
+
+
+@app.route('/FileDownloadP1.html')
+def FileDownloadP1():
+    req5 = "SELECT File FROM sys1.Orders WHERE OrderNum = %s"
+    req6 = session['OrderNumP1']
+    cursor.execute(req5, req6)
+    results = list(cursor)
+
+    upload = results[0][0]
+
+    with open("static/UploadedFiles/File" + str(session['OrderNumP1']) + "O" + ".stl", 'wb') as file:
+        file.write(upload)
+        file.close()  # get from db
+
+    return send_file("static/UploadedFiles/File" + str(session['OrderNumP1']) + "O" + ".stl", as_attachment=True)  # Auto Download
+
+@app.route('/FileDownloadP2.html')
+def FileDownloadP2():
+    req5 = "SELECT File FROM sys1.Orders WHERE OrderNum = %s"
+    req6 = session['OrderNumP2']
+    cursor.execute(req5, req6)
+    results = list(cursor)
+
+    upload = results[0][0]
+
+    with open("static/UploadedFiles/File" + str(session['OrderNumP2']) + "O" + ".stl", 'wb') as file:
+        file.write(upload)
+        file.close()  # get from db
+
+    return send_file("static/UploadedFiles/File" + str(session['OrderNumP2']) + "O" + ".stl", as_attachment=True)  # Auto Download
+
+@app.route('/FileDownloadP3.html')
+def FileDownloadP3():
+    req5 = "SELECT File FROM sys1.Orders WHERE OrderNum = %s"
+    req6 = session['OrderNumP3']
+    cursor.execute(req5, req6)
+    results = list(cursor)
+
+    upload = results[0][0]
+
+
+    with open("static/UploadedFiles/File" + str(session['OrderNumP3']) + "O" + ".stl", 'wb') as file:
+        file.write(upload)
+        file.close()  # get from db
+
+    return send_file("static/UploadedFiles/File" + str(session['OrderNumP3']) + "O" + ".stl", as_attachment=True)  # Auto Download
+
+
+@app.route('/FileDownloadP4.html')
+def FileDownloadP4():
+    req5 = "SELECT File FROM sys1.Orders WHERE OrderNum = %s"
+    req6 = session['OrderNumP4']
+    cursor.execute(req5, req6)
+    results = list(cursor)
+
+    upload = results[0][0]
+
+
+    with open("static/UploadedFiles/File" + str(session['OrderNumP4']) + "O" + ".stl", 'wb') as file:
+        file.write(upload)
+        file.close()  # get from db
+
+    return send_file("static/UploadedFiles/File" + str(session['OrderNumP4']) + "O" + ".stl", as_attachment=True)  # Auto Download
+
+@app.route('/FileDownloadP5.html')
+def FileDownloadP5():
+    req5 = "SELECT File FROM sys1.Orders WHERE OrderNum = %s"
+    req6 = session['OrderNumP5']
+    cursor.execute(req5, req6)
+    results = list(cursor)
+
+    upload = results[0][0]
+
+
+    with open("static/UploadedFiles/File" + str(session['OrderNumP5']) + "O" + ".stl", 'wb') as file:
+        file.write(upload)
+        file.close()  # get from db
+
+    return send_file("static/UploadedFiles/File" + str(session['OrderNumP5']) + "O" + ".stl", as_attachment=True)  # Auto Download
+
+@app.route('/FileDownloadC1.html')
+def FileDownloadC1():
+    req5 = "SELECT File FROM sys1.Orders WHERE OrderNum = %s"
+    req6 = session['OrderNumC1']
+    cursor.execute(req5, req6)
+    results = list(cursor)
+
+    upload = results[0][0]
+
+    with open("static/UploadedFiles/File" + str(session['OrderNumC1']) + "O" + ".stl", 'wb') as file:
+        file.write(upload)
+        file.close()  # get from db
+
+    return send_file("static/UploadedFiles/File" + str(session['OrderNumC1']) + "O" + ".stl", as_attachment=True)  # Auto Download
+
+@app.route('/FileDownloadC2.html')
+def FileDownloadC2():
+    req5 = "SELECT File FROM sys1.Orders WHERE OrderNum = %s"
+    req6 = session['OrderNumC2']
+    cursor.execute(req5, req6)
+    results = list(cursor)
+
+    upload = results[0][0]
+
+    with open("static/UploadedFiles/File" + str(session['OrderNumC2']) + "O" + ".stl", 'wb') as file:
+        file.write(upload)
+        file.close()  # get from db
+
+    return send_file("static/UploadedFiles/File" + str(session['OrderNumC2']) + "O" + ".stl", as_attachment=True)  # Auto Download
+
+@app.route('/FileDownloadC3.html')
+def FileDownloadC3():
+    req5 = "SELECT File FROM sys1.Orders WHERE OrderNum = %s"
+    req6 = session['OrderNumC3']
+    cursor.execute(req5, req6)
+    results = list(cursor)
+
+    upload = results[0][0]
+
+
+    with open("static/UploadedFiles/File" + str(session['OrderNumC3']) + "O" + ".stl", 'wb') as file:
+        file.write(upload)
+        file.close()  # get from db
+
+    return send_file("static/UploadedFiles/File" + str(session['OrderNumC3']) + "O" + ".stl", as_attachment=True)  # Auto Download
+
+
+@app.route('/FileDownloadC4.html')
+def FileDownloadC4():
+    req5 = "SELECT File FROM sys1.Orders WHERE OrderNum = %s"
+    req6 = session['OrderNumC4']
+    cursor.execute(req5, req6)
+    results = list(cursor)
+
+    upload = results[0][0]
+
+
+    with open("static/UploadedFiles/File" + str(session['OrderNumC4']) + "O" + ".stl", 'wb') as file:
+        file.write(upload)
+        file.close()  # get from db
+
+    return send_file("static/UploadedFiles/File" + str(session['OrderNumC4']) + "O" + ".stl", as_attachment=True)  # Auto Download
+
+@app.route('/FileDownloadC5.html')
+def FileDownloadC5():
+    req5 = "SELECT File FROM sys1.Orders WHERE OrderNum = %s"
+    req6 = session['OrderNumC5']
+    cursor.execute(req5, req6)
+    results = list(cursor)
+
+    upload = results[0][0]
+
+
+    with open("static/UploadedFiles/File" + str(session['OrderNumC5']) + "O" + ".stl", 'wb') as file:
+        file.write(upload)
+        file.close()  # get from db
+
+    return send_file("static/UploadedFiles/File" + str(session['OrderNumC5']) + "O" + ".stl", as_attachment=True)  # Auto Download
 
 
 @app.route('/accept/<token>/<OrderNum>', methods=['GET', 'POST'])  # If accepted order
