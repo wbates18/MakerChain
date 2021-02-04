@@ -2161,8 +2161,8 @@ def order():
 
 
         query = "INSERT INTO sys1.Orders (Cid, Mvol, Size, Material, Colours, PriceM, PriceD, PriceT, Infill, Quality,\
-            Quantity, File) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        query2 = (customerid, volume, Psize, Mat, Col, PriceM, PriceD, PriceT, infill, quality, Quantity, upload)
+            Quantity, File, PROGRESS) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        query2 = (customerid, volume, Psize, Mat, Col, PriceM, PriceD, PriceT, infill, quality, Quantity, upload, "Pending")
         cursor.execute(query, query2)
         conn.commit()
 
@@ -2746,6 +2746,146 @@ def FileDownloadC5():
     return send_file("static/UploadedFiles/File" + str(session['OrderNumC5']) + "O" + ".stl", as_attachment=True)  # Auto Download
 
 
+
+def Delivery(OrderNumS):
+    query1 = "SELECT Cid FROM sys1.Orders WHERE OrderNum = %s"
+    query2 = OrderNumS
+    cursor.execute(query1, query2)
+    results = list(cursor)
+
+    cid = results[0][0]
+
+    query3 = "SELECT Email FROM sys1.CUser WHERE id = %s"
+    query4 = cid
+    cursor.execute(query3, query4)
+    results2 = list(cursor)
+    email = results2[0][0]
+
+    sender_email = "makerchain.canada@gmail.com"
+    receiver_email = email
+    password = 'KaulBates2020'
+
+    message = MIMEMultipart('alternative')
+    message['Subject'] = "Order Completed"
+    message['From'] = sender_email
+    message['To'] = receiver_email
+
+    text = """\
+                                   """
+    html = """\
+                                   <html>
+                                       <body>
+                                           <p>
+                                                The Maker that completed your order says it is done. 
+                                                If it isn't delivered, or you have an issue please reply to this email.
+                                                Thank you for using MakerChain 
+                                           </p>
+                                       </body>
+                                   </html>
+                                 """
+
+    part1 = MIMEText(text, "plain")
+    part2 = MIMEText(html, "html")
+
+    message.attach(part1)
+    message.attach(part2)
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message.as_string())
+
+    query1 = "SELECT PriceT FROM sys1.Orders WHERE OrderNum = %s"
+    query2 = OrderNumS
+    cursor.execute(query1, query2)
+    results3 = list(cursor)
+    Price = results3[0][0]
+
+    sender_email = "makerchain.canada@gmail.com"
+    receiver_email = "makerchain.canada@gmail.com"
+    password = 'KaulBates2020'
+
+    message = MIMEMultipart('alternative')
+    message['Subject'] = "Order Completed"
+    message['From'] = sender_email
+    message['To'] = receiver_email
+
+    text = """\
+                                           """
+    html = """\
+                                           <html>
+                                               <body>
+                                                   <p>
+                                                        OrderNum = {}
+                                                        Price = {}
+                                                        Release payment
+                                                   </p>
+                                               </body>
+                                           </html>
+                                         """.format(Price, query2)
+
+    part1 = MIMEText(text, "plain")
+    part2 = MIMEText(html, "html")
+
+    message.attach(part1)
+    message.attach(part2)
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message.as_string())
+
+
+@app.route('/DeliveryC1.html')
+def DeliveryC1():
+    Delivery(session['OrderNumC1'])
+
+
+@app.route('/DeliveryC2.html')
+def DeliveryC2():
+    Delivery(session['OrderNumC2'])
+
+
+@app.route('/DeliveryC3.html')
+def DeliveryC3():
+    Delivery(session['OrderNumC3'])
+
+
+@app.route('/DeliveryC4.html')
+def DeliveryC4():
+    Delivery(session['OrderNumC4'])
+
+
+@app.route('/DeliveryC5.html')
+def DeliveryC5():
+    Delivery(session['OrderNumC5'])
+
+
+@app.route('/DeliveryP1.html')
+def DeliveryP1():
+    Delivery(session['OrderNumP1'])
+
+
+@app.route('/DeliveryP2.html')
+def DeliveryP2():
+    Delivery(session['OrderNumP2'])
+
+
+@app.route('/DeliveryP3.html')
+def DeliveryP3():
+    Delivery(session['OrderNumP3'])
+
+
+@app.route('/DeliveryP4.html')
+def DeliveryP4():
+    Delivery(session['OrderNumP4'])
+
+
+@app.route('/DeliveryP5.html')
+def DeliveryP5():
+    Delivery(session['OrderNumP5'])
+
+
 @app.route('/accept/<token>/<OrderNum>', methods=['GET', 'POST'])  # If accepted order
 def OAccept(token, OrderNum):
     serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
@@ -2829,6 +2969,11 @@ def OAccept(token, OrderNum):
             cursor.execute(query, query2)
             conn.commit()
 
+            query = "UPDATE sys1.Orders SET PROGESS = %s WHERE OrderNum = %s"
+            query2 = ("Awaiting Payment", OrderNum)
+            cursor.execute(query, query2)
+            conn.commit()
+
             query = "SELECT Cid, PriceT FROM sys1.Orders WHERE OrderNum = %s"
             cursor.execute(query, OrderNum)
             result = list(cursor)
@@ -2839,7 +2984,10 @@ def OAccept(token, OrderNum):
             email = result2[0][0]
             total = result[0][1]
 
-            #Add taxes and fees to total for email !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            percent = total / 5
+            Price = total + percent # 20% Fee
+            Price = Price * 1.13 # Tax
+            Price = Price + 1.50 # Interac Fee for both
 
             sender_email = "makerchain.canada@gmail.com"
             receiver_email = "makerchain.canada@gmail.com"
@@ -2859,10 +3007,12 @@ def OAccept(token, OrderNum):
                                         <p>
                                         email = {}
                                         total = {}
+                                        ordernum = {}
+                                        REMEMBER TO SET PROGRESS TO "Printing" AFTER PAYMENT COMES THROUGH
                                         </p>
                                     </body>
                                 </html>
-                            """.format(email, total)
+                            """.format(email, Price, OrderNum)
 
             part1 = MIMEText(text, "plain")
             part2 = MIMEText(html, "html")
@@ -2889,13 +3039,21 @@ def OAccept(token, OrderNum):
                 cursor.execute(query, query2)
                 conn.commit()
 
+                query = "UPDATE sys1.Orders SET PROGRESS = %s WHERE OrderNum = %s"
+                query2 = ("Awaiting Payment", OrderNum)
+                cursor.execute(query, query2)
+                conn.commit()
+
                 query = "SELECT Cid, PriceT FROM sys1.Orders WHERE OrderNum = %s"
                 cursor.execute(query, OrderNum)
                 result = list(cursor)
                 email = result[0][0]
                 total = result[0][1]
 
-                # Add taxes and fees to total for email !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                percent = total / 5
+                Price = total + percent  # 20% Fee
+                Price = Price * 1.13  # Tax
+                Price = Price + 1.50  # Interac Fee for both
 
                 sender_email = "makerchain.canada@gmail.com"
                 receiver_email = "makerchain.canada@gmail.com"
@@ -2910,15 +3068,17 @@ def OAccept(token, OrderNum):
 
                                    """
                 html = """\
-                                                <html>
-                                                    <body>
-                                                        <p>
-                                                        email = {}
-                                                        total = {}
-                                                        </p>
-                                                    </body>
-                                                </html>
-                                            """.format(email, total)
+                                <html>
+                                    <body>
+                                        <p>
+                                        email = {}
+                                        total = {}
+                                        ordernum = {}
+                                        REMEMBER TO SET PROGRESS TO "Printing" AFTER PAYMENT COMES THROUGH
+                                        </p>
+                                    </body>
+                                </html>
+                            """.format(email, Price, OrderNum)
 
                 part1 = MIMEText(text, "plain")
                 part2 = MIMEText(html, "html")

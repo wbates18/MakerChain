@@ -26,6 +26,61 @@
               let mC3 = 1;
               let mC4 = 1;
               let mC5 = 1;
+              let progressC0 = '{{ progressC[0] }}';
+              let progressC1 = '{{ progressC[1] }}';
+              let progressC2 = '{{ progressC[2] }}';
+              let progressC3 = '{{ progressC[3] }}';
+              let progressC4 = '{{ progressC[4] }}';
+              let progressP0 = '{{ progressP[0] }}';
+              let progressP1 = '{{ progressP[1] }}';
+              let progressP2 = '{{ progressP[2] }}';
+              let progressP3 = '{{ progressP[3] }}';
+              let progressP4 = '{{ progressP[4] }}';
+              document.getElementById("DeliveryC0").style.display = "none";
+              document.getElementById("DeliveryC1").style.display = "none";
+              document.getElementById("DeliveryC2").style.display = "none";
+              document.getElementById("DeliveryC3").style.display = "none";
+              document.getElementById("DeliveryC4").style.display = "none";
+              document.getElementById("Delivery0").style.display = "none";
+              document.getElementById("Delivery1").style.display = "none";
+              document.getElementById("Delivery2").style.display = "none";
+              document.getElementById("Delivery3").style.display = "none";
+              document.getElementById("Delivery4").style.display = "none";
+              if (progressC0 === "Printing") {
+                  document.getElementById("DeliveryC0").style.display = "table-row";
+              }
+              if (progressC1 === "Printing") {
+                  document.getElementById("DeliveryC1").style.display = "table-row";
+              }
+              if (progressC2 === "Printing") {
+                  document.getElementById("DeliveryC2").style.display = "table-row";
+              }
+              if (progressC3 === "Printing") {
+                  document.getElementById("DeliveryC3").style.display = "table-row";
+              }
+              if (progressC4 === "Printing") {
+                  document.getElementById("DeliveryC4").style.display = "table-row";
+              }
+              if (progressP0 === "Printing") {
+                  document.getElementById("Delivery0").style.display = "table-row";
+              }
+              if (progressP1 === "Printing") {
+                  document.getElementById("Delivery1").style.display = "table-row";
+              }
+              if (progressP2 === "Printing") {
+                  document.getElementById("Delivery2").style.display = "table-row";
+              }
+              if (progressP3 === "Printing") {
+                  document.getElementById("Delivery3").style.display = "table-row";
+              }
+              if (progressP4 === "Printing") {
+                  document.getElementById("Delivery4").style.display = "table-row";
+              }
+
+
+
+
+
               if (document.getElementById("MoreInfo0") != null) {
                   document.getElementById("MoreInfo0").style.display = "none";
               }
@@ -89,7 +144,6 @@
 
               function ShowInfo0() {
                   if (m1 === 1) {
-                      console.log("1")
                       document.getElementById("MoreInfo0").style.display = "table-row";
                       m1 = 2;
                       return;
@@ -313,6 +367,7 @@
                                                         <td>{{ quantityP[0] }}</td>
                                                         <td>{{ progressP[0] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show0">More Info</button></td>
+                                                        <td><a href="DeliveryP1.html" id="Delivery0">Delivery Completed</a></td>
                                                     </tr>
                                                     <tr id="MoreInfo0">
                                                         <td>Infill: {{ infillP[0] }}</td>
@@ -329,6 +384,7 @@
                                                         <td>{{ quantityP[1] }}</td>
                                                         <td>{{ progressP[1] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show1">More Info</button></td>
+                                                        <td><a href="DeliveryP2.html" id="Delivery1">Delivery Completed</a></td>
                                                     </tr>
                                                     <tr id="MoreInfo1">
                                                         <td>Infill: {{ infillP[1] }}</td>
@@ -345,6 +401,7 @@
                                                         <td>{{ quantityP[2] }}</td>
                                                         <td>{{ progressP[2] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show2">More Info</button></td>
+                                                        <td><a href="DeliveryP3.html" id="Delivery2">Delivery Completed</a></td>
                                                     </tr>
                                                     <tr id="MoreInfo2">
                                                         <td>Infill: {{ infillP[2] }}</td>
@@ -361,6 +418,7 @@
                                                         <td>{{ quantityP[3] }}</td>
                                                         <td>{{ progressP[3] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show3">More Info</button></td>
+                                                        <td><a href="DeliveryP4.html" id="Delivery3">Delivery Completed</a></td>
                                                     </tr>
                                                     <tr id="MoreInfo3">
                                                         <td>Infill: {{ infillP[3] }}</td>
@@ -377,6 +435,7 @@
                                                         <td>{{ quantityP[4] }}</td>
                                                         <td>{{ progressP[4] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show4">More Info</button></td>
+                                                        <td><a href="DeliveryP5.html" id="Delivery4">Delivery Completed</a></td>
                                                     </tr>
                                                     <tr id="MoreInfo4">
                                                         <td>Infill: {{ infillP[4] }}</td>
@@ -425,6 +484,7 @@
                                                         <td>{{ quantityC[0] }}</td>
                                                         <td>{{ progressC[0] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC0">More Info</button></td>
+                                                        <td><a href="DeliveryC1.html" id="DeliveryC0">Delivery Completed</a></td>
                                                     </tr>
                                                     <tr id="MoreInfoC0">
                                                         <td>Infill: {{ infillC[0] }}</td>
@@ -441,6 +501,7 @@
                                                         <td>{{ quantityC[1] }}</td>
                                                         <td>{{ progressC[1] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC1">More Info</button></td>
+                                                        <td><a href="DeliveryC2.html" id="DeliveryC1">Delivery Completed</a></td>
                                                     </tr>
                                                     <tr id="MoreInfoC1">
                                                         <td>Infill: {{ infillC[1] }}</td>
@@ -457,6 +518,7 @@
                                                         <td>{{ quantityC[2] }}</td>
                                                         <td>{{ progressC[2] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC2">More Info</button></td>
+                                                        <td><a href="DeliveryC3.html" id="DeliveryC2">Delivery Completed</a></td>
                                                     </tr>
                                                     <tr id="MoreInfoC2">
                                                         <td>Infill: {{ infillC[2] }}</td>
@@ -473,6 +535,7 @@
                                                         <td>{{ quantityC[3] }}</td>
                                                         <td>{{ progressC[3] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC3">More Info</button></td>
+                                                        <td><a href="DeliveryC4.html" id="DeliveryC3">Delivery Completed</a></td>
                                                     </tr>
                                                     <tr id="MoreInfoC3">
                                                         <td>Infill: {{ infillC[3] }}</td>
@@ -489,6 +552,7 @@
                                                         <td>{{ quantityC[4] }}</td>
                                                         <td>{{ progressC[4] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC4">More Info</button></td>
+                                                        <td><a href="DeliveryC5.html" id="DeliveryC4">Delivery Completed</a></td>
                                                     </tr>
                                                     <tr id="MoreInfoC4">
                                                         <td>Infill: {{ infillC[4] }}</td>
