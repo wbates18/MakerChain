@@ -726,6 +726,8 @@ def Mhome():
     resultP, nameP, emailP, quantityP, progressP, infillP, qualityP, distanceP, FinalP = Previous()
     resultC, nameC, emailC, quantityC, progressC, infillC, qualityC, distanceC, FinalC = Current()
 
+    data = {'progressC': progressC, 'progressP': progressP}
+
     P = 0
     C = 0
     if session.get('loggedin') != True:
@@ -820,11 +822,10 @@ def Mhome():
                     C = 0
             return render_template("clientHomemaker.html", variable=session['name'], variable2="Signed Up",
                                    pfp=session['pfp'], numbP=P, nameP=nameP, emailP=emailP,
-                                   quantityP=quantityP,
-                                   progressP=progressP, infillP=infillP, qualityP=qualityP,
+                                   quantityP=quantityP, infillP=infillP, qualityP=qualityP,
                                    distanceP=distanceP,
                                    FinalP=FinalP, numbC=C, nameC=nameC,
-                                   emailC=emailC, quantityC=quantityC, progressC=progressC, infillC=infillC,
+                                   emailC=emailC, quantityC=quantityC, data=data, infillC=infillC,
                                    qualityC=qualityC, distanceC=distanceC, FinalC=FinalC)
         else:
             if len(resultP) == 1:
@@ -913,11 +914,10 @@ def Mhome():
                     C = 0
             return render_template("clientHomemaker.html", variable=session['name'], variable2=False, pfp=session['pfp'],
                                    numbP=P, nameP=nameP, emailP=emailP,
-                                   quantityP=quantityP,
-                                   progressP=progressP, infillP=infillP, qualityP=qualityP,
+                                   quantityP=quantityP, infillP=infillP, qualityP=qualityP,
                                    distanceP=distanceP,
                                    FinalP=FinalP, numbC=C, nameC=nameC,
-                                   emailC=emailC, quantityC=quantityC, progressC=progressC, infillC=infillC,
+                                   emailC=emailC, quantityC=quantityC, data=data, infillC=infillC,
                                    qualityC=qualityC, distanceC=distanceC, FinalC=FinalC)
 
 
@@ -1075,7 +1075,7 @@ def Chome():
         elif len(resultP) >= 5:
             final_listP = Nmaxelements(resultP, 5)
         else:
-            return [], 0, 0, 0, 0, 0, 0, 0, 0, 0
+            return [], 0, 0, 0, 0, 0, 0, 0, 0
         resultP = final_listP
 
         result_listP = []
@@ -1172,6 +1172,8 @@ def Chome():
     resultP, nameP, emailP, quantityP, progressP, infillP, qualityP, distanceP, FinalP = Previous()
     resultC, nameC, emailC, quantityC, progressC, infillC, qualityC, distanceC, FinalC = Current()
 
+    data = {'progressC': progressC, 'progressP': progressP}
+
     P = 0
     C = 0
     if session.get('loggedin') != True:
@@ -1266,11 +1268,10 @@ def Chome():
                     C = 0
             return render_template("clientHome.html", variable=session['name'], variable2="Signed Up",
                                    pfp=session['pfp'], numbP=P, nameP=nameP, emailP=emailP,
-                                   quantityP=quantityP,
-                                   progressP=progressP, infillP=infillP, qualityP=qualityP,
+                                   quantityP=quantityP, infillP=infillP, qualityP=qualityP,
                                    distanceP=distanceP,
                                    FinalP=FinalP, numbC=C, nameC=nameC,
-                                   emailC=emailC, quantityC=quantityC, progressC=progressC, infillC=infillC,
+                                   emailC=emailC, quantityC=quantityC, data=data, infillC=infillC,
                                    qualityC=qualityC, distanceC=distanceC, FinalC=FinalC)
         else:
             if len(resultP) == 1:
@@ -1359,11 +1360,10 @@ def Chome():
                     C = 0
             return render_template("clientHome.html", variable=session['name'], variable2=False, pfp=session['pfp'],
                                    numbP=P, nameP=nameP, emailP=emailP,
-                                   quantityP=quantityP,
-                                   progressP=progressP, infillP=infillP, qualityP=qualityP,
+                                   quantityP=quantityP, infillP=infillP, qualityP=qualityP,
                                    distanceP=distanceP,
                                    FinalP=FinalP, numbC=C, nameC=nameC,
-                                   emailC=emailC, quantityC=quantityC, progressC=progressC, infillC=infillC,
+                                   emailC=emailC, quantityC=quantityC, data=data, infillC=infillC,
                                    qualityC=qualityC, distanceC=distanceC, FinalC=FinalC)
 
 

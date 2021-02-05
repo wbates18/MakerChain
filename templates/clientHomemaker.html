@@ -26,16 +26,16 @@
               let mC3 = 1;
               let mC4 = 1;
               let mC5 = 1;
-              let progressC0 = '{{ progressC[0] }}';
-              let progressC1 = '{{ progressC[1] }}';
-              let progressC2 = '{{ progressC[2] }}';
-              let progressC3 = '{{ progressC[3] }}';
-              let progressC4 = '{{ progressC[4] }}';
-              let progressP0 = '{{ progressP[0] }}';
-              let progressP1 = '{{ progressP[1] }}';
-              let progressP2 = '{{ progressP[2] }}';
-              let progressP3 = '{{ progressP[3] }}';
-              let progressP4 = '{{ progressP[4] }}';
+              let progressC0 = '{{ data.progressC[0] }}';
+              let progressC1 = '{{ data.progressC[1] }}';
+              let progressC2 = '{{ data.progressC[2] }}';
+              let progressC3 = '{{ data.progressC[3] }}';
+              let progressC4 = '{{ data.progressC[4] }}';
+              let progressP0 = '{{ data.progressP[0] }}';
+              let progressP1 = '{{ data.progressP[1] }}';
+              let progressP2 = '{{ data.progressP[2] }}';
+              let progressP3 = '{{ data.progressP[3] }}';
+              let progressP4 = '{{ data.progressP[4] }}';
               document.getElementById("DeliveryC0").style.display = "none";
               document.getElementById("DeliveryC1").style.display = "none";
               document.getElementById("DeliveryC2").style.display = "none";
@@ -365,7 +365,7 @@
                                                         <td>{{ emailP[0] }}</td>
                                                         <td><a href="FileDownloadP1.html">File Download</a></td>
                                                         <td>{{ quantityP[0] }}</td>
-                                                        <td>{{ progressP[0] }}</td>
+                                                        <td>{{ data.progressP[0] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show0">More Info</button></td>
                                                         <td><a href="DeliveryP1.html" id="Delivery0">Delivery Completed</a></td>
                                                     </tr>
@@ -382,7 +382,7 @@
                                                         <td>{{ emailP[1] }}</td>
                                                         <td><a href="FileDownloadP2.html">File Download</a></td>
                                                         <td>{{ quantityP[1] }}</td>
-                                                        <td>{{ progressP[1] }}</td>
+                                                        <td>{{ data.progressP[1] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show1">More Info</button></td>
                                                         <td><a href="DeliveryP2.html" id="Delivery1">Delivery Completed</a></td>
                                                     </tr>
@@ -399,7 +399,7 @@
                                                         <td>{{ emailP[2] }}</td>
                                                         <td><a href="FileDownloadP3.html">File Download</a></td>
                                                         <td>{{ quantityP[2] }}</td>
-                                                        <td>{{ progressP[2] }}</td>
+                                                        <td>{{ data.progressP[2] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show2">More Info</button></td>
                                                         <td><a href="DeliveryP3.html" id="Delivery2">Delivery Completed</a></td>
                                                     </tr>
@@ -416,7 +416,7 @@
                                                         <td>{{ emailP[3] }}</td>
                                                         <td><a href="FileDownloadP4.html">File Download</a></td>
                                                         <td>{{ quantityP[3] }}</td>
-                                                        <td>{{ progressP[3] }}</td>
+                                                        <td>{{ data.progressP[3] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show3">More Info</button></td>
                                                         <td><a href="DeliveryP4.html" id="Delivery3">Delivery Completed</a></td>
                                                     </tr>
@@ -433,7 +433,7 @@
                                                         <td>{{ emailP[4] }}</td>
                                                         <td><a href="FileDownloadP5.html">File Download</a></td>
                                                         <td>{{ quantityP[4] }}</td>
-                                                        <td>{{ progressP[4] }}</td>
+                                                        <td>{{ data.progressP[4] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="Show4">More Info</button></td>
                                                         <td><a href="DeliveryP5.html" id="Delivery4">Delivery Completed</a></td>
                                                     </tr>
@@ -482,7 +482,7 @@
                                                         <td>{{ emailC[0] }}</td>
                                                         <td><a href="FileDownloadC1.html">File Download</a></td>
                                                         <td>{{ quantityC[0] }}</td>
-                                                        <td>{{ progressC[0] }}</td>
+                                                        <td>{{ data.progressC[0] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC0">More Info</button></td>
                                                         <td><a href="DeliveryC1.html" id="DeliveryC0">Delivery Completed</a></td>
                                                     </tr>
@@ -499,7 +499,7 @@
                                                         <td>{{ emailC[1] }}</td>
                                                         <td><a href="FileDownloadC2.html">File Download</a></td>
                                                         <td>{{ quantityC[1] }}</td>
-                                                        <td>{{ progressC[1] }}</td>
+                                                        <td>{{ data.progressC[1] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC1">More Info</button></td>
                                                         <td><a href="DeliveryC2.html" id="DeliveryC1">Delivery Completed</a></td>
                                                     </tr>
@@ -516,7 +516,7 @@
                                                         <td>{{ emailC[2] }}</td>
                                                         <td><a href="FileDownloadC3.html">File Download</a></td>
                                                         <td>{{ quantityC[2] }}</td>
-                                                        <td>{{ progressC[2] }}</td>
+                                                        <td>{{ data.progressC[2] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC2">More Info</button></td>
                                                         <td><a href="DeliveryC3.html" id="DeliveryC2">Delivery Completed</a></td>
                                                     </tr>
@@ -533,7 +533,7 @@
                                                         <td>{{ emailC[3] }}</td>
                                                         <td><a href="FileDownloadC4.html">File Download</a></td>
                                                         <td>{{ quantityC[3] }}</td>
-                                                        <td>{{ progressC[3] }}</td>
+                                                        <td>{{ data.progressC[3] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC3">More Info</button></td>
                                                         <td><a href="DeliveryC4.html" id="DeliveryC3">Delivery Completed</a></td>
                                                     </tr>
@@ -550,7 +550,7 @@
                                                         <td>{{ emailC[4] }}</td>
                                                         <td><a href="FileDownloadC5.html">File Download</a></td>
                                                         <td>{{ quantityC[4] }}</td>
-                                                        <td>{{ progressC[4] }}</td>
+                                                        <td>{{ data.progressC[4] }}</td>
                                                         <td><button type="button" class="btn btn-outline-info btn-group-toggle" data-toggle="buttons" id="ShowC4">More Info</button></td>
                                                         <td><a href="DeliveryC5.html" id="DeliveryC4">Delivery Completed</a></td>
                                                     </tr>
