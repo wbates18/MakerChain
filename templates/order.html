@@ -5,11 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript">
-      $(document).ready(function () {
+      document.addEventListener("DOMContentLoaded", function(event) {
           let x = 0;
           let xmat = 0;
           let xmat2 = 0;
@@ -23,25 +23,24 @@
           let xcol5 = 0;
           let xin = 0;
           let xq = 0;
-
-          $("#col2").hide();
-          $("#col3").hide();
-          $("#col4").hide();
-          $("#col5").hide();
-          $("#mat2").hide();
-          $("#mat3").hide();
-          $("#mat4").hide();
-          $("#mat5").hide();
-          $("#mcol2").hide();
-          $("#mcol3").hide();
-          $("#mcol4").hide();
-          $("#mcol5").hide();
-          $("#mmat2").hide();
-          $("#mmat3").hide();
-          $("#mmat4").hide();
-          $("#mmat5").hide();
-          $("#othermat1").hide();
-          $("#othercol1").hide();
+          document.getElementById("col2").style.display = "none";
+          document.getElementById("col3").style.display = "none";
+          document.getElementById("col4").style.display = "none";
+          document.getElementById("col5").style.display = "none";
+          document.getElementById("mat2").style.display = "none";
+          document.getElementById("mat3").style.display = "none";
+          document.getElementById("mat4").style.display = "none";
+          document.getElementById("mat5").style.display = "none";
+          document.getElementById("mcol2").style.display = "none";
+          document.getElementById("mcol3").style.display = "none";
+          document.getElementById("mcol4").style.display = "none";
+          document.getElementById("mcol5").style.display = "none";
+          document.getElementById("mmat2").style.display = "none";
+          document.getElementById("mmat3").style.display = "none";
+          document.getElementById("mmat4").style.display = "none";
+          document.getElementById("mmat5").style.display = "none";
+          document.getElementById("othermat1").style.display = "none";
+          document.getElementById("othercol1").style.display = "none";
           document.getElementById("showcol5").style.display = "none";
           document.getElementById("showcol5").style.display = "none";
           document.getElementById("showcol5").style.display = "none";
@@ -171,57 +170,57 @@
 
           function showmulti(amount) {
               if (amount === 1) {
-                  $("#mcol2").hide();
-                  $("#mmat2").hide();
-                  $("#mcol3").hide();
-                  $("#mmat3").hide();
-                  $("#mcol4").hide();
-                  $("#mmat4").hide();
-                  $("#mcol5").hide();
-                  $("#mmat5").hide();
+                  document.getElementById("mcol2").style.display = "none";
+                  document.getElementById("mcol3").style.display = "none";
+                  document.getElementById("mcol4").style.display = "none";
+                  document.getElementById("mcol5").style.display = "none";
+                  document.getElementById("mmat2").style.display = "none";
+                  document.getElementById("mmat3").style.display = "none";
+                  document.getElementById("mmat4").style.display = "none";
+                  document.getElementById("mmat5").style.display = "none";
 
               }
 
               if (amount === 2) {
-                  $("#mcol2").show();
-                  $("#mmat2").show();
-                  $("#mcol3").hide();
-                  $("#mmat3").hide();
-                  $("#mcol4").hide();
-                  $("#mmat4").hide();
-                  $("#mcol5").hide();
-                  $("#mmat5").hide();
+                  document.getElementById("mcol2").style.display = "block";
+                  document.getElementById("mcol3").style.display = "none";
+                  document.getElementById("mcol4").style.display = "none";
+                  document.getElementById("mcol5").style.display = "none";
+                  document.getElementById("mmat2").style.display = "block";
+                  document.getElementById("mmat3").style.display = "none";
+                  document.getElementById("mmat4").style.display = "none";
+                  document.getElementById("mmat5").style.display = "none";
 
               }
               if (amount === 3) {
-                  $("#mcol2").show();
-                  $("#mmat2").show();
-                  $("#mcol3").show();
-                  $("#mmat3").show();
-                  $("#mcol4").hide();
-                  $("#mmat4").hide();
-                  $("#mcol5").hide();
-                  $("#mmat5").hide();
+                  document.getElementById("mcol2").style.display = "block";
+                  document.getElementById("mcol3").style.display = "block";
+                  document.getElementById("mcol4").style.display = "none";
+                  document.getElementById("mcol5").style.display = "none";
+                  document.getElementById("mmat2").style.display = "block";
+                  document.getElementById("mmat3").style.display = "block";
+                  document.getElementById("mmat4").style.display = "none";
+                  document.getElementById("mmat5").style.display = "none";
               }
               if (amount === 4) {
-                  $("#mcol2").show();
-                  $("#mmat2").show();
-                  $("#mcol3").show();
-                  $("#mmat3").show();
-                  $("#mcol4").show();
-                  $("#mmat4").show();
-                  $("#mcol5").hide();
-                  $("#mmat5").hide();
+                  document.getElementById("mcol2").style.display = "block";
+                  document.getElementById("mcol3").style.display = "block";
+                  document.getElementById("mcol4").style.display = "block";
+                  document.getElementById("mcol5").style.display = "none";
+                  document.getElementById("mmat2").style.display = "block";
+                  document.getElementById("mmat3").style.display = "block";
+                  document.getElementById("mmat4").style.display = "block";
+                  document.getElementById("mmat5").style.display = "none";
               }
               if (amount === 5) {
-                  $("#mcol2").show();
-                  $("#mmat2").show();
-                  $("#mcol3").show();
-                  $("#mmat3").show();
-                  $("#mcol4").show();
-                  $("#mmat4").show();
-                  $("#mcol5").show();
-                  $("#mmat5").show();
+                  document.getElementById("mcol2").style.display = "block";
+                  document.getElementById("mcol3").style.display = "block";
+                  document.getElementById("mcol4").style.display = "block";
+                  document.getElementById("mcol5").style.display = "block";
+                  document.getElementById("mmat2").style.display = "block";
+                  document.getElementById("mmat3").style.display = "block";
+                  document.getElementById("mmat4").style.display = "block";
+                  document.getElementById("mmat5").style.display = "block";
               }
 
           }

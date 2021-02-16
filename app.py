@@ -24,7 +24,7 @@ def Sort_Tuple(tup):
     for i in range(0, lst):
 
         for j in range(0, lst - i - 1):
-            if (tup[j][1] > tup[j + 1][1]):
+            if tup[j][1] > tup[j + 1][1]:
                 temp = tup[j]
                 tup[j] = tup[j + 1]
                 tup[j + 1] = temp
@@ -521,7 +521,7 @@ def Mhome():
         elif len(resultC) >= 5:
             final_listC = Nmaxelements(resultC, 5)
         else:
-            return [], 0, 0, 0, 0, 0, 0, 0, 0, 0
+            return [], 0, 0, 0, 0, 0, 0, 0, 0
         resultC = final_listC
 
         result_listC = []
