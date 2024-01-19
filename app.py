@@ -35,7 +35,7 @@ ALLOWED_EXTENTIONS = ".png", ".jpeg", ".jpg", ".JPG", ".JPEG", ".PNG"
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.config['SECURITY_PASSWORD_SALT'] = 'two_hippos_in_a_bath'
 
-conn = mysql.connect(user='root', password='KaulBates2020a', host='127.0.0.1', database='sys1')  #connection to mysql -- will be hashed
+conn = mysql.connect(user='root', password='', host='127.0.0.1', database='sys1')  #connection to mysql -- will be hashed
 cursor = conn.cursor()
 
 
