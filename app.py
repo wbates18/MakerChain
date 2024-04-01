@@ -1443,7 +1443,7 @@ def verification(token):
 
         sender_email = "makerchain.canada@gmail.com"
         receiver_email = session['email']
-        password = 'KaulBates2020'
+        password = ''
 
         message = MIMEMultipart('alternative')
         message['Subject'] = "Email Confirmation"
